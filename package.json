@@ -1,0 +1,40 @@
+{
+  "name": "buskstop",
+  "version": "1.0.0",
+  "description": "Buskstop is a social media application for buskers and their fans.",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "passport": "^0.4.1",
+    "path": "^0.12.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "babel-loader": "^8.2.2",
+    "enzyme": "^3.11.0",
+    "jest": "^27.0.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js",
+    "react-dev": "webpack",
+    "react-watch": "webpack --mode development -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cedar-Dev/buskstop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cedar-Dev/buskstop/issues"
+  },
+  "homepage": "https://github.com/Cedar-Dev/buskstop#readme"
+}
