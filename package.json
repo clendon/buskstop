@@ -4,6 +4,7 @@
   "description": "Buskstop is a social media application for buskers and their fans.",
   "main": "index.js",
   "dependencies": {
+    "@stripe/stripe-js": "^1.17.1",
     "axios": "^0.21.1",
     "express": "^4.17.1",
     "passport": "^0.4.1",
