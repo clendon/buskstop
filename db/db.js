@@ -5,7 +5,7 @@ m.connect('mongodb://localhost:27017/buskstop',
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-const examplePeopleSchema = m.Schema({
+const peopleSchema = m.Schema({
   id: 'string',
   name: 'string',
   location: 'string',
@@ -16,9 +16,9 @@ const examplePeopleSchema = m.Schema({
   audienceOrPerformer: 'string',
   dateAndTime: 'string'
 })
-const examplePeopleModel = m.model('examplePeople', examplePeopleSchema)
+const peopleModel = m.model('people', peopleSchema)
 module.exports = {
   models: {
-    exampleData: examplePeopleModel
+    people: peopleModel
   }
 }
