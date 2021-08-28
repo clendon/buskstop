@@ -17,8 +17,9 @@ const peopleSchema = m.Schema({
   dateAndTime: 'string'
 })
 const peopleModel = m.model('people', peopleSchema)
+
+// this will eventually be built out with more models
 module.exports = {
-  models: {
-    people: peopleModel
-  }
+  people: peopleModel
+  //TODO: add more models
 }
