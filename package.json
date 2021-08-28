@@ -4,11 +4,21 @@
   "description": "Buskstop is a social media application for buskers and their fans.",
   "main": "index.js",
   "dependencies": {
+    "@stripe/stripe-js": "^1.17.1",
     "axios": "^0.21.1",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.0.2",
+    "next": "^11.1.0",
+    "nodemon": "^2.0.12",
     "passport": "^0.4.1",
+    "passport-auth0": "^1.4.0",
     "path": "^0.12.7",
+    "postcss-cli": "^8.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-maps": "^9.4.5",
     "webpack": "^5.51.1",
     "webpack-cli": "^4.8.0"
   },
@@ -16,15 +26,22 @@
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
+    "autoprefixer": "^10.3.3",
     "babel-loader": "^8.2.2",
+    "css-loader": "^6.2.0",
     "enzyme": "^3.11.0",
-    "jest": "^27.0.6"
+    "jest": "^27.0.6",
+    "postcss": "^8.3.6",
+    "postcss-loader": "^6.1.1",
+    "style-loader": "^3.2.1",
+    "tailwindcss": "^2.2.8"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/app.js",
+    "start": "nodemon server/app.js",
     "react-dev": "webpack",
-    "react-watch": "webpack --mode development -w"
+    "react-watch": "webpack --mode development -w",
+    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
   },
   "repository": {
     "type": "git",
