@@ -1,3 +1,10 @@
+/*
+
+this and the main.css make tailwind classes available to our React components. our postCSS loader takes the tailwind libraries below and outputs them to main.css, which gets bundled into our webpack.
+
+something to look out for: I *think* our webpack is correctly pruning out (treeshaking) any tailwind classes we don't use, but I haven't tested for it yet. Might have to change npm start back to 'npm run watch:css && nodemon ./server/app.js'
+*/
+
 @tailwind base;
 
 @tailwind components;

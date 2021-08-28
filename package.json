@@ -37,7 +37,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run watch:css && node server/app.js",
+    "start": "nodemon server/app.js",
     "react-dev": "webpack",
     "react-watch": "webpack --mode development -w",
     "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
