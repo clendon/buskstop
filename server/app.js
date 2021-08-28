@@ -14,26 +14,26 @@ const PORT = 3000
 
 // middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static('public'))
 
 
 // routes
 app.get('/people', (req, res) => {
-  db.models.people.find()
+  db.people.find()
   .exec()
   .then((data) => {
     res.send(data)
   })
   .catch((err) => {
-    console.log('you have an err', err)
-    res.end()
+    res.status(400).send(err.stack);
   })
-})
+});
+
 app.post('/people', (req, res) => {
   res.sendStatus(201)
-})
+});
 
 // starting the server
 app.listen(PORT, () => {
   console.log(`Server is listening on Port:${PORT}`)
-})
+});
