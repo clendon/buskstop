@@ -2,14 +2,14 @@ const PORT = 3000
 const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser')
-const db = require('./db/db.js')
+const db = require('../db/db.js')
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const jsonParser = bodyParser.json()
 const app = express()
 app.use(jsonParser)
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))
+app.use(express.static(path.join(__dirname, 'public')))
 app.get('/people', (req, res) => {
   db.models.people.find()
   .exec()
