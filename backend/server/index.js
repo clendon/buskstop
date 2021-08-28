@@ -19,7 +19,7 @@ const app = express()
 const PORT = 3000
 
 // middleware
-app.use(express.json());
+// app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -90,7 +90,7 @@ app.get('/people', (req, res) => {
   db.models.people.find()
   .exec()
   .then((data) => {
-    res.send(data)
+    res.json(data)
   })
   .catch((err) => {
     console.log('you have an err', err)
