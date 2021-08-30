@@ -1,6 +1,4 @@
-const express = require('express')
-const mongo = require('mongodb');
-const path = require('path');
+const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session')
@@ -15,19 +13,15 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const mongoose = require('mongoose');
 const User = require('../database/user')
 
+const database = require('../database/index');
 
 // create server
-const app = express()
-
-// configuration
-const PORT = 3000
+const app = express();
 
 // middleware
 app.use(express.json());
 app.use(express.static('public'));
-// commented out for now
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: 'https://localhost:3000',
   credentials: true
@@ -62,28 +56,32 @@ m.connect('mongodb+srv://Admin:admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase
 
 // routes
 app.post('/login', (req, res) => {
+  // eslint-disable-next-line no-unused-vars
   passport.authentication('local', (err, user, info) => {
     if (err) throw err;
     if (!user) res.send('No User Exists');
     else {
-      req.login(user, err => {
+      // eslint-disable-next-line no-shadow
+      req.login(user, (err) => {
         if (err) throw err;
         res.send('Successfully Authenticated');
+        // eslint-disable-next-line no-console
         console.log(req.user);
-      })
-    };
+      });
+    }
   });
-  (req, res, next);
+  // eslint-disable-next-line no-unused-expressions
+  (req, res);
 });
 app.post('/signup', (req, res) => {
-  User.findOne({username: req.body.username}, async(err, doc) => {
+  database.models.NewUser.findOne({ username: req.body.username }, async (err, doc) => {
     if (err) throw err;
     if (doc) res.send('User Already Exists');
     if (!doc) {
-      const newUser = new User({
-        username: erq.body.username,
-        password: req.body.password
-      })
+      const newUser = new database.models.NewUser({
+        username: req.body.username,
+        password: req.body.password,
+      });
       await newUser.save();
       res.send('User Created');
     }
@@ -93,40 +91,28 @@ app.post('/signup', (req, res) => {
 app.get('/user', (req, res) => {
   // store entire user
   res.send(req.user);
-})
-
-
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
-
-
-app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
-
-
+});
 app.get('/people', (req, res) => {
-  db.models.people.find()
-  .exec()
-  .then((data) => {
-    res.send(data)
-  })
-  .catch((err) => {
-    console.log('you have an err', err)
-    res.end()
-  })
-})
-
-
+  database.models.people.find()
+    .exec()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.log('you have an err', err);
+      res.end();
+    });
+});
 app.post('/people', (req, res) => {
-  res.sendStatus(201)
-})
+  res.sendStatus(201);
+});
+
+const PORT = 3000;
 
 
 // starting the server
 app.listen(PORT, () => {
-  console.log(`Server is listening on Port:${PORT}`)
-})
+  // eslint-disable-next-line no-console
+  console.log(`Server is listening on Port:${PORT}`);
+});
