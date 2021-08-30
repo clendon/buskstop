@@ -1,62 +1,38 @@
 const express = require('express')
-const mongo = require('mongodb');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
 const passportLocal = require('passport-local').Strategy;
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs')
-const expressSession = require('express-session')
-// commented out for now
-// const bodyParser = require('body-parser')
-
-//TODO: this throws a huge error because a mongo database is not running on every local machine yet, please resolve by configuring MongoAtlas or by temporarily commenting out all parts of the code that cause the error
-const mongoose = require('mongoose');
-const User = require('../database/user')
+const session = require('express-session');
+const database = require('../database/index.js')
 
 
 // create server
 const app = express()
 
-// configuration
-const PORT = 3000
-
 // middleware
 app.use(express.json());
 app.use(express.static('public'));
-// commented out for now
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(cors({
   origin: 'https://localhost:3000',
   credentials: true
 })
 );
-app.use(cookieParser('secretCode'))
-// TODO: fix this, session is not defined and breaks the server trying to run the code
-// app.use(session({
-//   secret: 'secretcode',
-//   resave: true,
-//   saveUninitialized: true
-// })
-// );
+app.use(session({
+  secret: 'secretcode',
+  resave: true,
+  saveUninitialized: true
+})
+);
 app.use(cookieParser('secretcode'));
 app.use(passport.initialize());
 app.use(passport.session());
-// TODO: this passport file is broken, prevents server from running
-// require('./passportConfig')(passport);
+require('./passportConfig')(passport);
 
 
-// path to database
-const db = require('../database/db.js')
-
-// connect to database
-const m = new mongoose.Mongoose();
-m.connect('mongodb+srv://Admin:admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-{
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
 
 // routes
 app.post('/login', (req, res) => {
@@ -74,7 +50,7 @@ app.post('/login', (req, res) => {
   (req, res, next);
 });
 app.post('/signup', (req, res) => {
-  User.findOne({username: req.body.username}, async(err, doc) => {
+  database.models.newUser.findOne({username: req.body.username}, async(err, doc) => {
     if (err) throw err;
     if (doc) res.send('User Already Exists');
     if (!doc) {
@@ -93,7 +69,7 @@ app.get('/user', (req, res) => {
   res.send(req.user);
 })
 app.get('/people', (req, res) => {
-  db.models.people.find()
+  database.models.people.find()
   .exec()
   .then((data) => {
     res.json(data)
@@ -106,6 +82,8 @@ app.get('/people', (req, res) => {
 app.post('/people', (req, res) => {
   res.sendStatus(201)
 })
+
+const PORT = 3000
 
 // starting the server
 app.listen(PORT, () => {
