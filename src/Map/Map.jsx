@@ -1,4 +1,4 @@
-import React, { Component, useState, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useLoadScript, GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
 
 function Map() {
@@ -11,7 +11,7 @@ function Map() {
   const [infoOpen, setInfoOpen] = useState(false);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyChW7HxR18lAimHaftQmNwD-qk8rMLzTg8'
+    googleMapsApiKey: ''
   });
 
   const sampleData = [
