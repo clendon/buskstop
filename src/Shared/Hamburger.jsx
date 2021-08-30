@@ -10,7 +10,7 @@ const Hamburger = ({options}) => {
   return (
     <>
       {open && 
-        <div className="flex flex-col border rounded w-max">
+        <div className="flex flex-col border border-black rounded w-max">
           <a href="#">map</a>
           <a href="#">feed</a>
           <a href="#">your performances</a>
@@ -18,7 +18,7 @@ const Hamburger = ({options}) => {
           <a href="#">logout</a>
         </div>
       }
-      <button onClick={clickHandler} className="border rounded">
+      <button onClick={clickHandler} className="border border-black rounded px-1">
         <svg viewBox="0 0 100 80" width="40" height="40">
           <rect width="100" height="20"></rect>
           <rect y="30" width="100" height="20"></rect>
