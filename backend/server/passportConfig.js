@@ -1,28 +1,32 @@
-const User = require('../database/user');
+const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
-const  localStrategy = require('passport-local').Strategy;
+const database = require('../database/index');
+
+// eslint-disable-next-line func-names
 module.exports = function (passport) {
   passport.use(
+    // eslint-disable-next-line new-cap
     new localStrategy((username, password, done) => {
-      User.findOne({username: username}, (err, user) => {
+      // eslint-disable-next-line consistent-return
+      database.models.newUser.findOne({ username }, (err, user) => {
         if (err) throw err;
         if (!user) return done(null, false);
+        // eslint-disable-next-line no-shadow
         bcrypt.compare(password, user.password, (err, result) => {
           if (err) throw err;
           if (result === true) {
             return done(null, user);
-          } else {
-            return done(null, false);
           }
+          return done(null, false);
         });
       });
-    })
+    }),
   );
-  passport.serializedUser((user, cb) => {
-    cb(null, user.id)
+  passport.serializeUser((user, cb) => {
+    cb(null, user.id);
   });
-  passport.deserializedUser((id, cb) => {
-    User.findOne({_id: id}, (err, user) => {
+  passport.deserializeUser((id, cb) => {
+    database.models.newUser.findOne({ _id: id }, (err, user) => {
       const userInformation = {
         username: user.username,
       };
