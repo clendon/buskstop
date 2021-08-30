@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Map from "./Map";
+import Map from "./Map.jsx";
 
 function MapView(props){
     return(
