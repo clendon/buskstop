@@ -24,7 +24,7 @@ const App = () => (
           <Search />
         </Route>
       </Switch>
-      <Footer />
+      <Footer menu={true}/>
     </div>
   </Router>
 );
