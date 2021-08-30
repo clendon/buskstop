@@ -7,12 +7,10 @@ const Hamburger = ({options}) => {
     setOpen(!open);
   };
 
-  const redirect = () => {};
-
   return (
     <>
       {open && 
-        <div className="flex flex-col">
+        <div className="flex flex-col border rounded w-max">
           <a href="#">map</a>
           <a href="#">feed</a>
           <a href="#">your performances</a>
@@ -20,7 +18,7 @@ const Hamburger = ({options}) => {
           <a href="#">logout</a>
         </div>
       }
-      <button onClick={clickHandler}>
+      <button onClick={clickHandler} className="border rounded">
         <svg viewBox="0 0 100 80" width="40" height="40">
           <rect width="100" height="20"></rect>
           <rect y="30" width="100" height="20"></rect>
@@ -35,10 +33,3 @@ const Hamburger = ({options}) => {
 export default Hamburger;
 
 
-      // <div>
-      //   <a href=#>map</a>
-      //   <a href=#>feed</a>
-      //   <a href=#>your performances</a>
-      //   <a href=#>buskers</a>
-      //   <a href=#>logout</a>
-      // </div>
