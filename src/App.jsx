@@ -6,7 +6,7 @@ import Search from './Search/Search.jsx';
 
 const App = () => (
   <Router>
-    <div className="h-screen shadow border flex flex-col justify-end">
+    <div className="h-screen shadow border flex flex-col justify-evenly">
       <Switch>
         <Route exact path="/audience/:id">
           {/* filler */}
