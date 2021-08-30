@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 const Footer = ({menu}) => {
   return (
-    <div className="border border-black w-full">Footer Here</div>
+    <div className="border border-black w-full flex justify-self-end">Footer Here</div>
   );
 };
 
