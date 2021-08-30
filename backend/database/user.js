@@ -9,4 +9,4 @@ const user = m.Schema({
   username: 'string',
   password: 'string'
 })
-module.exports('User', user)
+module.exports = ('User', user)

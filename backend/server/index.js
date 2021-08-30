@@ -7,7 +7,10 @@ const passportLocal = require('passport-local').Strategy;
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs')
 const expressSession = require('express-session')
-const bodyParser = require('body-parser')
+// commented out for now
+// const bodyParser = require('body-parser')
+
+//TODO: this throws a huge error because
 const mongoose = require('mongoose');
 const User = require('../database/user')
 
@@ -19,26 +22,29 @@ const app = express()
 const PORT = 3000
 
 // middleware
-// app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.static('public'));
+// commented out for now
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors({
   origin: 'https://localhost:3000',
   credentials: true
 })
 );
 app.use(cookieParser('secretCode'))
-app.use(session({
-  secret: 'secretcode',
-  resave: true,
-  saveUninitialized: true
-})
-);
+// TODO: fix this, session is not defined and breaks the server trying to run the code
+// app.use(session({
+//   secret: 'secretcode',
+//   resave: true,
+//   saveUninitialized: true
+// })
+// );
 app.use(cookieParser('secretcode'));
 app.use(passport.initialize());
 app.use(passport.session());
-require('./passportConfig')(passport);
+// TODO: this passport file is broken, prevents server from running
+// require('./passportConfig')(passport);
 
 
 // path to database
