@@ -3,14 +3,15 @@ const mongo = require('mongodb');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
-const passportLocal = require('passport-local').Strategy;
+const session = require('express-session')
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs')
-const expressSession = require('express-session')
+const passportLocal = require('passport-local').Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
 // commented out for now
 // const bodyParser = require('body-parser')
 
-//TODO: this throws a huge error because a mongo database is not running on every local machine yet, please resolve by configuring MongoAtlas or by temporarily commenting out all parts of the code that cause the error
 const mongoose = require('mongoose');
 const User = require('../database/user')
 
@@ -34,17 +35,18 @@ app.use(cors({
 );
 app.use(cookieParser('secretCode'))
 // TODO: fix this, session is not defined and breaks the server trying to run the code
-// app.use(session({
-//   secret: 'secretcode',
-//   resave: true,
-//   saveUninitialized: true
-// })
-// );
+app.use(session({
+  secret: 'secretcode',
+  resave: true,
+  saveUninitialized: true
+})
+);
 app.use(cookieParser('secretcode'));
 app.use(passport.initialize());
 app.use(passport.session());
 // TODO: this passport file is broken, prevents server from running
-// require('./passportConfig')(passport);
+passport.use(new GoogleStrategy());
+require('./passportConfig')(passport);
 
 
 // path to database
@@ -92,20 +94,37 @@ app.get('/user', (req, res) => {
   // store entire user
   res.send(req.user);
 })
+
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+
 app.get('/people', (req, res) => {
   db.models.people.find()
   .exec()
   .then((data) => {
-    res.json(data)
+    res.send(data)
   })
   .catch((err) => {
     console.log('you have an err', err)
     res.end()
   })
 })
+
+
 app.post('/people', (req, res) => {
   res.sendStatus(201)
 })
+
 
 // starting the server
 app.listen(PORT, () => {

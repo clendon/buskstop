@@ -9,5 +9,4 @@ const user = m.Schema({
   username: 'string',
   password: 'string'
 })
-//TODO: stop exporting parens
-module.exports = ('User', user)
+module.exports = {user: user}
