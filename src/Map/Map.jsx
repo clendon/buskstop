@@ -15,7 +15,7 @@ function Map() {
   });
 
   const sampleData = [
-    { id: "Spiderman", location: "New York City, United States", pos: { lat: 40.6728, lng: -74.3280 }, description: "Mr Stark, I don't feel so good", image: "https://www.gannett-cdn.com/-mm-/cc053686530ce446f0a27dc352961fac33dd12ac/c=1144-81-2630-920/local/-/media/2017/06/26/USATODAY/USATODAY/636340759929048028-XXX-SPIDER-MAN-HOMECOMING-87249008.JPG?width=660&height=373&fit=crop&format=pjpg&auto=webp"},
+    { id: "Thor", location: "New York City, United States", pos: { lat: 40.6728, lng: -74.3280 }, description: "Mr Stark, I don't feel so good", image: "https://www.gannett-cdn.com/-mm-/cc053686530ce446f0a27dc352961fac33dd12ac/c=1144-81-2630-920/local/-/media/2017/06/26/USATODAY/USATODAY/636340759929048028-XXX-SPIDER-MAN-HOMECOMING-87249008.JPG?width=660&height=373&fit=crop&format=pjpg&auto=webp"},
     { id: "Harry Potter", location: "New York City, United States", pos: { lat: 40.6818, lng: -74.1372 }, description: "You're a wizard, Harry", image: "https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/09/29/15/hp.jpg?width=982&height=726&auto=webp&quality=75"},
     { id: "Donkey", location: "New York City, United States", pos: { lat: 40.7028, lng: -74.5610 }, description: "I am like an onion", image: "https://iconarchive.com/download/i61331/majdi-khawaja/shrek/Shrek-2.ico"},
     { id: "Squidward", location: "New York City, United States", pos: { lat: 40.6228, lng: -74.0251 }, description: "You like Krabby Patties, don't you Squidward?", image: "https://64.media.tumblr.com/81c4c6ba1f670d5e1c92a688e630cf0f/tumblr_inline_ozitt2mnrF1sss5ih_540.png"},
