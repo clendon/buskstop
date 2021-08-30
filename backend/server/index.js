@@ -10,7 +10,7 @@ const expressSession = require('express-session')
 // commented out for now
 // const bodyParser = require('body-parser')
 
-//TODO: this throws a huge error because
+//TODO: this throws a huge error because mongoose is not hooked up yet, please resolve
 const mongoose = require('mongoose');
 const User = require('../database/user')
 
