@@ -10,7 +10,7 @@ const expressSession = require('express-session')
 // commented out for now
 // const bodyParser = require('body-parser')
 
-//TODO: this throws a huge error because mongoose is not hooked up yet, please resolve
+//TODO: this throws a huge error because a mongo database is not running on every local machine yet, please resolve by configuring MongoAtlas or by temporarily commenting out all parts of the code that cause the error
 const mongoose = require('mongoose');
 const User = require('../database/user')
 
