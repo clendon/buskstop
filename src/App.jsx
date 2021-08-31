@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Route, HashRouter as Router, Switch, Link} from 'react-router-dom';
+import MapView from './Map/MapView.jsx'
 import Header from './Shared/Header.jsx';
 import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
@@ -7,8 +8,7 @@ import Performer from './Performer/Performer.jsx';
 
 const App = () => (
     <div className="h-screen grid grid-flow-col">
-      <Performer />
-
+     <Performer />
     </div>
 );
 
@@ -24,10 +24,10 @@ export default App;
 //     {/* filler */}
 //   </Route>
 //   <Route exact path="/map">
-//     {/* filler */}
+//     <MapView />
 //   </Route>
 //   <Route exact path="/performer/:id">
-//     <Performer />
+//     {<Performer />}
 //   </Route>
 //   <Route exact path="/search">
 //     <Search />
