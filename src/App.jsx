@@ -5,7 +5,7 @@ import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
 
 const App = () => (
-    <div className="h-screen grid grid-flow-col">
+    <div className="h-screen grid grid-flow-row justify-center">
       <Router>
         <Switch>
           <Route exact path="/audience/:id">
