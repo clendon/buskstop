@@ -6,7 +6,7 @@ import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
 
 const App = () => (
-    <div className="h-screen max-h-screen">
+    <div className="h-screen max-h-screen flex flex-col min-h-full justify-between items-stretch">
       <Router>
         <Switch>
           <Route exact path="/audience/:id">
