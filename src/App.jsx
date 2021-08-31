@@ -27,11 +27,7 @@ const App = () => (
         </Route>
       </Switch>
     </Router>
-<<<<<<< HEAD
-    <Footer menu={true}/>
-=======
     <Footer menu />
->>>>>>> development
   </div>
 );
 
