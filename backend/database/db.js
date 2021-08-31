@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+
 const m = new mongoose.Mongoose();
 m.connect('mongodb+srv://Admin:Admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-{
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 const peopleSchema = m.Schema({
   id: 'string',
   name: 'string',
@@ -14,12 +15,12 @@ const peopleSchema = m.Schema({
   description: 'string',
   profileImageURL: 'string',
   audienceOrPerformer: 'string',
-  dateAndTime: 'string'
-})
-const peopleModel = m.model('people', peopleSchema)
+  dateAndTime: 'string',
+});
+const peopleModel = m.model('people', peopleSchema);
 
 // this will eventually be built out with more models
 module.exports = {
-  people: peopleModel
-  //TODO: add more models
-}
+  people: peopleModel,
+  // TODO: add more models
+};

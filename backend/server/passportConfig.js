@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 const localStrategy = require('passport-local').Strategy;

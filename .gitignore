@@ -6,6 +6,9 @@ config.js
 
 # bundle
 public/bundle.js
+<<<<<<< HEAD
 
 #package-lock
 package-lock.json
+=======
+>>>>>>> 450b1275a70ced27dac121caf5f4d3fe87c1c62c
