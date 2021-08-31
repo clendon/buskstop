@@ -45,13 +45,15 @@ const peopleSchema = new Schema({
   ],
   description: String,
   profileImageURL: String,
-  audienceOrPerformer: String,
+  AudienceorPerformer: String,
   followers: [
     String,
   ],
 });
 
-const people = mongoose.model('people', peopleSchema, 'people');
+const People = mongoose.model('people', peopleSchema, 'people');
+
+const findBuskers = async () => People.find({ AudienceorPerformer: 'Performer' });
 
 const newUserSchema = new Schema({
   username: String,
@@ -77,7 +79,8 @@ const addNewUser = (user) => {
 module.exports = {
   models: {
     NewUser,
-    people,
+    People,
   },
+  findBuskers,
   addNewUser,
 };

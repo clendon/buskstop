@@ -26,7 +26,126 @@ app.use(passport.initialize());
 app.use(passport.session());
 require('./passportConfig')(passport);
 
-// routes
+// Routes to handle interactions with the Front-end
+/**
+ * Routes Needed:
+ *   1) GET Buskers
+ *   2) GET Buskers - delinineated by category
+ *   3) GET Performers by followers <-- NEED TO ADD
+ * Performer View
+ *   4) GET thier own performances
+ *   5) POST new performance
+ *   6) PUT - edit performance (params will include properties included within the events doc)
+ *   7) DELETE a performance OR all performances
+ *   8) GET number of followers
+ * Mixed
+ *   9) GET profile - Busker
+ *  10) GET profile - audience member
+ *  11) DELETE profile
+ */
+
+app.get('/buskers', (req, res) => {
+  database.findBuskers()
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+app.get('/buskers/:category', ({ params }, res) => {
+  const { category } = params;
+  // eslint-disable-next-line no-console
+  console.log(category);
+  database.models.people.find({ Category: category })
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+// --------------Performer View--------------------------------------
+
+app.get('/buskers/:name/events', ({ params }, res) => {
+  const { name } = params;
+  // eslint-disable-next-line no-console
+  console.log(name);
+  database.models.people.find({ Name: name })
+    .then((results) => {
+      // eslint-disable-next-line no-console
+      console.log(results);
+      res.send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+app.post('/buskers/:name/events', (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log(req);
+  res.send('TEST');
+});
+
+app.put('/buskers/:name/events', (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log(req);
+  res.send('TEST');
+});
+
+app.delete('/buskers/:name/events', (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log(req);
+  res.send('TESTING');
+});
+
+app.get('/buskers/:name/followers', ({ params }, res) => {
+  const { name } = params;
+  // eslint-disable-next-line no-console
+  console.log(name);
+  database.models.people.find({ Name: name })
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// --------------Mixed--------------------------------------
+app.get('/profile/:name/busker', (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log(req);
+  res.send('TEST');
+});
+
+app.get('profile/:name/audience', (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log(req);
+  res.send('TEST');
+});
+
+// --------------RANDOM TO BE DELETED--------------------------------------
+app.get('/people', (req, res) => {
+  database.models.people.find()
+    .exec()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.log('you have an err', err);
+      res.end();
+    });
+});
+app.post('/people', (req, res) => {
+  res.sendStatus(201);
+});
+
+// Routes to handle logging in & logging out
 app.post('/login', (req, res) => {
   // eslint-disable-next-line no-unused-vars
   passport.authentication('local', (err, user, info) => {
@@ -45,6 +164,7 @@ app.post('/login', (req, res) => {
   // eslint-disable-next-line no-unused-expressions
   (req, res);
 });
+
 app.post('/signup', (req, res) => {
   database.models.NewUser.findOne({ username: req.body.username }, async (err, doc) => {
     if (err) throw err;
@@ -63,21 +183,6 @@ app.post('/signup', (req, res) => {
 app.get('/user', (req, res) => {
   // store entire user
   res.send(req.user);
-});
-app.get('/people', (req, res) => {
-  database.models.people.find()
-    .exec()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log('you have an err', err);
-      res.end();
-    });
-});
-app.post('/people', (req, res) => {
-  res.sendStatus(201);
 });
 
 const PORT = 3000;
