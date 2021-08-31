@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Route, HashRouter as Router, Switch, Link } from 'react-router-dom';
+import { Route, HashRouter as Router, Switch, Link } from 'react-router-dom'; //eslint-disable-line
 import MapView from './Map/MapView.jsx'
 import Header from './Shared/Header.jsx';
 import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
+import Login from './Login/login.jsx';
 
 const App = () => (
   <div className="h-screen max-h-screen flex flex-col min-h-full justify-between items-stretch">
@@ -13,7 +14,7 @@ const App = () => (
           {/* filler */}
         </Route>
         <Route exact path="/login">
-          {/* filler */}
+          <Login />
         </Route>
         <Route exact path="/map">
           <MapView />
@@ -26,7 +27,11 @@ const App = () => (
         </Route>
       </Switch>
     </Router>
+<<<<<<< HEAD
     <Footer menu={true}/>
+=======
+    <Footer menu />
+>>>>>>> development
   </div>
 );
 
