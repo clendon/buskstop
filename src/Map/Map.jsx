@@ -95,7 +95,7 @@ function Map() {
                 <h3>{selectedBusker["Name"]}</h3>
                 <div>{selectedBusker["Description"]}</div>
                 <div>
-                <img class="object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
+                <img className="object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
             </div>
               </div>
             </InfoWindow>
@@ -113,7 +113,7 @@ function Map() {
         )}
 
         {selectedBusker && <h3>Selected Busker: {selectedBusker["ID"]}<br></br> Location: {selectedBusker["Location"]} <br></br>{selectedBusker["Description"]} <br></br>
-        <img class="object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
+        <img className="object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
         </h3>}
       </Fragment>
     );
