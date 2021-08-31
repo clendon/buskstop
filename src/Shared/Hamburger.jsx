@@ -13,7 +13,7 @@ const Hamburger = () => {
   return (
     <>
       {open && 
-        <div className="flex flex-col border border-black rounded w-max">
+        <div className="flex flex-col border border-black rounded w-max absolute bottom-10">
           <a href="#" className="border-b border-black">map</a>
           <a href="#" className="border-b border-black">feed</a>
           <a href="#" className="border-b border-black">your performances</a>
