@@ -57,14 +57,33 @@ const People = mongoose.model('people', peopleSchema, 'people');
 // Functions correlating to the People Collection
 const findBuskers = async () => People.find({ AudienceorPerformer: 'Performer' });
 
-const findBuskerByCategory = async (category) => {
+const findBuskerByCategory = async (category) => People.find({ Category: category });
+
+const findBuskerByName = async (name) => People.find({ Name: name });
+
+const addEventFor = async (name, event) => {
   // eslint-disable-next-line no-console
-  console.log('In Database:', category);
-  const results = await People.find({ Category: category }).limit(10);
+  console.log(name);
   // eslint-disable-next-line no-console
-  console.log(results);
-  return results;
+  console.log(event);
 };
+
+const updateEventFor = async (name, event) => {
+  // eslint-disable-next-line no-console
+  console.log(name);
+  // eslint-disable-next-line no-console
+  console.log(event);
+};
+
+const deleteEventFor = async (name, event) => {
+  // eslint-disable-next-line no-console
+  console.log(name);
+  // eslint-disable-next-line no-console
+  console.log(event);
+};
+
+const deleteProfileFor = async (name) => People.findOneAndDelete({ Name: name });
+
 const newUserSchema = new Schema({
   username: String,
   password: String,
@@ -93,5 +112,10 @@ module.exports = {
   },
   findBuskers,
   findBuskerByCategory,
+  findBuskerByName,
+  addEventFor,
+  updateEventFor,
+  deleteEventFor,
+  deleteProfileFor,
   addNewUser,
 };

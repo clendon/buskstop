@@ -44,8 +44,9 @@ require('./passportConfig')(passport);
  *  11) DELETE profile
  */
 
-app.get('/buskers', (req, res) => {
-  database.findBuskers()
+// 1)
+app.get('/buskers', async (req, res) => {
+  await database.findBuskers()
     .then((results) => {
       res.send(results);
     })
@@ -54,14 +55,11 @@ app.get('/buskers', (req, res) => {
     });
 });
 
+// 2)
 app.get('/buskers/:category', async ({ params }, res) => {
   const { category } = params;
-  // eslint-disable-next-line no-console
-  console.log('In Server:', category);
   await database.findBuskerByCategory(category)
     .then((results) => {
-      // eslint-disable-next-line no-console
-      // console.log(results);
       res.status(201).send(results);
     })
     .catch((err) => {
@@ -69,16 +67,15 @@ app.get('/buskers/:category', async ({ params }, res) => {
     });
 });
 
+// 3) Need to ADD Below
 // --------------Performer View--------------------------------------
 
-app.get('/buskers/:name/events', ({ params }, res) => {
+// 4)
+app.get('/buskers/:name/events', async ({ params }, res) => {
   const { name } = params;
-  // eslint-disable-next-line no-console
-  console.log(name);
-  database.models.people.find({ Name: name })
+  await database.findBuskerByName(name)
     .then((results) => {
-      // eslint-disable-next-line no-console
-      console.log(results);
+      // NOTE: This result Object must be reconfigured to Handle events properly.
       res.send(results);
     })
     .catch((err) => {
@@ -86,30 +83,58 @@ app.get('/buskers/:name/events', ({ params }, res) => {
     });
 });
 
-app.post('/buskers/:name/events', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log(req);
-  res.send('TEST');
-});
-
-app.put('/buskers/:name/events', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log(req);
-  res.send('TEST');
-});
-
-app.delete('/buskers/:name/events', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log(req);
-  res.send('TESTING');
-});
-
-app.get('/buskers/:name/followers', ({ params }, res) => {
+// 5)
+app.post('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
-  // eslint-disable-next-line no-console
-  console.log(name);
-  database.models.people.find({ Name: name })
+  const newEvent = {
+    location: body.location,
+    coordinates: body.coordinates,
+    date: body.date,
+    time: body.time,
+  };
+  await database.addEventFor(name, newEvent)
+    .then(() => {
+      res.send(201);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// 6)
+app.put('/buskers/:name/events', async ({ params, body }, res) => {
+  const { name } = params;
+  const updatedEvent = {
+    event: body,
+  };
+  await database.updateEventFor(name, updatedEvent)
+    .then(() => {
+      res.send(204);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+});
+
+// 7)
+app.delete('/buskers/:name/events', async ({ params, body }, res) => {
+  const { name } = params;
+  const eventToBeDeleted = body;
+  await database.deleteEventFor(name, eventToBeDeleted)
+    .then(() => {
+      res.send(204);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+});
+
+// 8)
+app.get('/buskers/:name/followers', async ({ params }, res) => {
+  const { name } = params;
+  await database.findBuskerByName(name)
     .then((results) => {
+      // NOTE: This result Object must be reconfigured to Handle followers properly.
       res.send(results);
     })
     .catch((err) => {
@@ -118,16 +143,43 @@ app.get('/buskers/:name/followers', ({ params }, res) => {
 });
 
 // --------------Mixed--------------------------------------
-app.get('/profile/:name/busker', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log(req);
+// 9)
+app.get('/profile/:name/busker', async ({ params }, res) => {
+  const { name } = params;
+  await database.findBuskerByName(name)
+    .then((results) => {
+      // NOTE: This result Object must be reconfigured to Handle profile properly.
+      res.send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
   res.send('TEST');
 });
 
-app.get('profile/:name/audience', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log(req);
-  res.send('TEST');
+// 10)
+app.get('profile/:name/audience', async ({ params }, res) => {
+  const { name } = params;
+  await database.findBuskerByName(name)
+    .then((results) => {
+      // NOTE: This result Object must be reconfigured to Handle profile properly.
+      res.send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// 11)
+app.delete('/profile/:name', async ({ params }, res) => {
+  const { name } = params;
+  await database.deleteProfileFor(name)
+    .then(() => {
+      res.send(202);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
 });
 
 // --------------RANDOM TO BE DELETED--------------------------------------
