@@ -6,7 +6,6 @@ import Search from './Search/Search.jsx';
 
 const App = () => (
     <div className="h-screen grid">
-      <div>div here</div>
       <Router>
         <Switch>
           <Route exact path="/audience/:id">
