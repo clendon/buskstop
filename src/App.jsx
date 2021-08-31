@@ -6,7 +6,9 @@ import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
 
 const App = () => (
-    <div className="h-screen grid grid-flow-col">
+    <div className="h-screen flex flex-col min-h-full justify-between items-stretch">
+      <div>something random</div>
+      <div>something else random</div>
       <Router>
         <Switch>
           <Route exact path="/audience/:id">
