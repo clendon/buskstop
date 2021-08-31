@@ -5,13 +5,13 @@ import Header from './Shared/Header.jsx';
 import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
 import Login from './Login/login.jsx';
-
+import Audience from './Audience/Audience.jsx';
 const App = () => (
   <div className="h-screen max-h-screen flex flex-col min-h-full justify-between items-stretch">
     <Router>
       <Switch>
         <Route exact path="/audience/:id">
-          {/* filler */}
+          <Audience profile={{}} />
         </Route>
         <Route exact path="/login">
           <Login />

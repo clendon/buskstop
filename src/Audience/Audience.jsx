@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; //eslint-disable-line
 
-const AudienceProfile = ({ profile }) => {
+const Audience = ({ profile }) => {
 
 };
 
-export default AudienceProfile;
+export default Audience;
