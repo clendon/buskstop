@@ -29,7 +29,7 @@ app.use(cors({
   origin: 'https://localhost:3000',
   credentials: true,
 }));
-app.use(cookieParser('secretCode'));
+// app.use(cookieParser('secretCode'));
 // TODO: fix this, session is not defined and breaks the server trying to run the code
 app.use(session({
   secret: 'secretcode',
