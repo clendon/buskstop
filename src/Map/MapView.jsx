@@ -3,7 +3,7 @@ import Map from "./Map.jsx";
 
 function MapView(props){
     return(
-        <section>
+        <section className="border border-black w-full container">
             <Map />
         </section>
     );
