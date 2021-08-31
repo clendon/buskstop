@@ -14,37 +14,15 @@ const peopleSchema = new Schema({
   ID: String,
   Name: String,
   Category: String || undefined,
-  events: [
+  Events: [
     {
       location: String,
-      Coordinates: {
-        lat: Number,
-        lng: Number,
-      },
+      Coordinates: String,
       date: Date,
-      time: String,
-    } || undefined,
-    {
-      location: String,
-      Coordinates: {
-        lat: Number,
-        lng: Number,
-      },
-      date: Date,
-      time: String,
-    } || undefined,
-    {
-      location: String,
-      Coordinates: {
-        lat: Number,
-        lng: Number,
-      },
-      date: Date,
-      time: String,
     } || undefined,
   ],
   Description: String,
-  Image: String,
+  image: String,
   AudienceorPerformer: String,
   followers: [
     String,

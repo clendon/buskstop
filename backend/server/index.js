@@ -68,6 +68,8 @@ app.get('/buskers/:category', async ({ params }, res) => {
 });
 
 // 3) Need to ADD Below
+// --------------Audience View--------------------------------------
+
 // --------------Performer View--------------------------------------
 
 // 4)
@@ -75,8 +77,7 @@ app.get('/buskers/:name/events', async ({ params }, res) => {
   const { name } = params;
   await database.findBuskerByName(name)
     .then((results) => {
-      // NOTE: This result Object must be reconfigured to Handle events properly.
-      res.send(results);
+      res.send(results[0].Events);
     })
     .catch((err) => {
       res.send(err);
@@ -90,7 +91,6 @@ app.post('/buskers/:name/events', async ({ params, body }, res) => {
     location: body.location,
     coordinates: body.coordinates,
     date: body.date,
-    time: body.time,
   };
   await database.addEventFor(name, newEvent)
     .then(() => {
