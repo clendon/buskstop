@@ -4,7 +4,7 @@ import Hamburger from './Hamburger.jsx';
 
 const Footer = ({menu}) => {
   return (
-    <div className="grid grid-rows-1 grid-cols-1 gap-0 justify-self-end items-end">
+    <div className="grid grid-rows-1 grid-cols-1 gap-0 justify-self-end items-end justify-items-end">
       {menu && <Hamburger />}
     </div>
   );
