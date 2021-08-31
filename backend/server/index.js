@@ -58,7 +58,7 @@ m.connect('mongodb+srv://Admin:Admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase
 // routes
 app.post('/login', (req, res) => {
   // eslint-disable-next-line no-unused-vars
-  passport.authentication('local', (err, user, info) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) throw err;
     if (!user) res.send('No User Exists');
     else {
