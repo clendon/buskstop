@@ -8,16 +8,16 @@ db.on('error', console.error.bind(console, 'connection error'));
 // eslint-disable-next-line no-console
 db.once('open', () => console.log('Connected to MongoDB'));
 
-// Schemas
+// Schema for People (ALL USERS)
 const { Schema } = mongoose;
 const peopleSchema = new Schema({
-  id: String,
-  name: String,
-  category: String || undefined,
+  ID: String,
+  Name: String,
+  Category: String || undefined,
   events: [
     {
       location: String,
-      coordinates: {
+      Coordinates: {
         lat: Number,
         lng: Number,
       },
@@ -26,7 +26,7 @@ const peopleSchema = new Schema({
     } || undefined,
     {
       location: String,
-      coordinates: {
+      Coordinates: {
         lat: Number,
         lng: Number,
       },
@@ -35,7 +35,7 @@ const peopleSchema = new Schema({
     } || undefined,
     {
       location: String,
-      coordinates: {
+      Coordinates: {
         lat: Number,
         lng: Number,
       },
@@ -43,15 +43,46 @@ const peopleSchema = new Schema({
       time: String,
     } || undefined,
   ],
-  description: String,
-  profileImageURL: String,
-  audienceOrPerformer: String,
+  Description: String,
+  Image: String,
+  AudienceorPerformer: String,
   followers: [
     String,
   ],
 });
 
-const people = mongoose.model('people', peopleSchema, 'people');
+// Model for People
+const People = mongoose.model('people', peopleSchema, 'people');
+
+// Functions correlating to the People Collection
+const findBuskers = async () => People.find({ AudienceorPerformer: 'Performer' });
+
+const findBuskerByCategory = async (category) => People.find({ Category: category });
+
+const findBuskerByName = async (name) => People.find({ Name: name });
+
+const addEventFor = async (name, event) => {
+  // eslint-disable-next-line no-console
+  console.log(name);
+  // eslint-disable-next-line no-console
+  console.log(event);
+};
+
+const updateEventFor = async (name, event) => {
+  // eslint-disable-next-line no-console
+  console.log(name);
+  // eslint-disable-next-line no-console
+  console.log(event);
+};
+
+const deleteEventFor = async (name, event) => {
+  // eslint-disable-next-line no-console
+  console.log(name);
+  // eslint-disable-next-line no-console
+  console.log(event);
+};
+
+const deleteProfileFor = async (name) => People.findOneAndDelete({ Name: name });
 
 const newUserSchema = new Schema({
   username: String,
@@ -77,7 +108,14 @@ const addNewUser = (user) => {
 module.exports = {
   models: {
     NewUser,
-    people,
+    People,
   },
+  findBuskers,
+  findBuskerByCategory,
+  findBuskerByName,
+  addEventFor,
+  updateEventFor,
+  deleteEventFor,
+  deleteProfileFor,
   addNewUser,
 };
