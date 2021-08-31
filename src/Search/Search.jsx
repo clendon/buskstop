@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Busker from './Components/Busker.jsx';
-import params from '../Shared/variables.js';
+import { params } from '../Shared/variables.js';
 
 const Search = function() {
   const [buskers, setBuskers] = useState([]);
