@@ -8,16 +8,16 @@ db.on('error', console.error.bind(console, 'connection error'));
 // eslint-disable-next-line no-console
 db.once('open', () => console.log('Connected to MongoDB'));
 
-// Schemas
+// Schema for People (ALL USERS)
 const { Schema } = mongoose;
 const peopleSchema = new Schema({
-  id: String,
-  name: String,
-  category: String || undefined,
+  ID: String,
+  Name: String,
+  Category: String || undefined,
   events: [
     {
       location: String,
-      coordinates: {
+      Coordinates: {
         lat: Number,
         lng: Number,
       },
@@ -26,7 +26,7 @@ const peopleSchema = new Schema({
     } || undefined,
     {
       location: String,
-      coordinates: {
+      Coordinates: {
         lat: Number,
         lng: Number,
       },
@@ -35,7 +35,7 @@ const peopleSchema = new Schema({
     } || undefined,
     {
       location: String,
-      coordinates: {
+      Coordinates: {
         lat: Number,
         lng: Number,
       },
@@ -43,18 +43,28 @@ const peopleSchema = new Schema({
       time: String,
     } || undefined,
   ],
-  description: String,
-  profileImageURL: String,
+  Description: String,
+  Image: String,
   AudienceorPerformer: String,
   followers: [
     String,
   ],
 });
 
+// Model for People
 const People = mongoose.model('people', peopleSchema, 'people');
 
+// Functions correlating to the People Collection
 const findBuskers = async () => People.find({ AudienceorPerformer: 'Performer' });
 
+const findBuskerByCategory = async (category) => {
+  // eslint-disable-next-line no-console
+  console.log('In Database:', category);
+  const results = await People.find({ Category: category }).limit(10);
+  // eslint-disable-next-line no-console
+  console.log(results);
+  return results;
+};
 const newUserSchema = new Schema({
   username: String,
   password: String,
@@ -82,5 +92,6 @@ module.exports = {
     People,
   },
   findBuskers,
+  findBuskerByCategory,
   addNewUser,
 };

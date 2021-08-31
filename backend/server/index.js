@@ -54,16 +54,18 @@ app.get('/buskers', (req, res) => {
     });
 });
 
-app.get('/buskers/:category', ({ params }, res) => {
+app.get('/buskers/:category', async ({ params }, res) => {
   const { category } = params;
   // eslint-disable-next-line no-console
-  console.log(category);
-  database.models.people.find({ Category: category })
+  console.log('In Server:', category);
+  await database.findBuskerByCategory(category)
     .then((results) => {
-      res.send(results);
+      // eslint-disable-next-line no-console
+      // console.log(results);
+      res.status(201).send(results);
     })
-    .catch((error) => {
-      res.send(error);
+    .catch((err) => {
+      res.send(err);
     });
 });
 
