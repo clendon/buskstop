@@ -13,7 +13,7 @@ function Map() {
   const [markerMap, setMarkerMap] = useState({});
   const [center, setCenter] = useState({ lat: 40.7128, lng: -74.0060 });
   const [data, setData] = useState(() => {
-    axios.get('/people').then((response) => setData(response.data));
+    axios.get('/buskers').then((response) => setData(response.data));
 });
   const [zoom, setZoom] = useState(5);
   const [clickedLatLng, setClickedLatLng] = useState(null);
