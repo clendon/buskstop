@@ -1,17 +1,20 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
-const session = require('express-session')
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 const passportLocal = require('passport-local').Strategy;
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // commented out for now
 // const bodyParser = require('body-parser')
 
 const mongoose = require('mongoose');
-const User = require('../database/user')
+const User = require('../database/user');
+const passportSetup = require('./passportConfig');
 
 const database = require('../database/index');
 
@@ -24,35 +27,33 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: 'https://localhost:3000',
-  credentials: true
-})
-);
-app.use(cookieParser('secretCode'))
+  credentials: true,
+}));
+app.use(cookieParser('secretCode'));
 // TODO: fix this, session is not defined and breaks the server trying to run the code
 app.use(session({
   secret: 'secretcode',
   resave: true,
-  saveUninitialized: true
-})
-);
+  saveUninitialized: true,
+}));
 app.use(cookieParser('secretcode'));
 app.use(passport.initialize());
 app.use(passport.session());
 // TODO: this passport file is broken, prevents server from running
-passport.use(new GoogleStrategy());
+// passport.use(new GoogleStrategy());
 require('./passportConfig')(passport);
 
-
 // path to database
-const db = require('../database/db.js')
+// eslint-disable-next-line import/no-unresolved
+const db = require('../database/index.js');
 
 // connect to database
 const m = new mongoose.Mongoose();
-m.connect('mongodb+srv://Admin:admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-{
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+m.connect('mongodb+srv://Admin:Admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
 // routes
 app.post('/login', (req, res) => {
@@ -92,6 +93,17 @@ app.get('/user', (req, res) => {
   // store entire user
   res.send(req.user);
 });
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/redirect',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
 app.get('/people', (req, res) => {
   database.models.people.find()
     .exec()
@@ -109,7 +121,6 @@ app.post('/people', (req, res) => {
 });
 
 const PORT = 3000;
-
 
 // starting the server
 app.listen(PORT, () => {

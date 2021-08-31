@@ -6,3 +6,6 @@ config.js
 
 # bundle
 public/bundle.js
+
+#package-lock
+package-lock.json
