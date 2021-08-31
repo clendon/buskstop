@@ -5,28 +5,29 @@ import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
 
 const App = () => (
-  <Router>
-    <div className="h-screen shadow border flex flex-col justify-evenly">
-      <Switch>
-        <Route exact path="/audience/:id">
-          {/* filler */}
-        </Route>
-        <Route exact path="/login">
-          {/* filler */}
-        </Route>
-        <Route exact path="/map">
-          {/* filler */}
-        </Route>
-        <Route exact path="/performer/:id">
-          {/* filler */}
-        </Route>
-        <Route exact path="/search">
-          <Search />
-        </Route>
-      </Switch>
+    <div className="h-screen grid">
+      <div>div here</div>
+      <Router>
+        <Switch>
+          <Route exact path="/audience/:id">
+            {/* filler */}
+          </Route>
+          <Route exact path="/login">
+            {/* filler */}
+          </Route>
+          <Route exact path="/map">
+            {/* filler */}
+          </Route>
+          <Route exact path="/performer/:id">
+            {/* filler */}
+          </Route>
+          <Route exact path="/search">
+            <Search />
+          </Route>
+        </Switch>
+      </Router>
       <Footer menu={true}/>
     </div>
-  </Router>
 );
 
 export default App;
