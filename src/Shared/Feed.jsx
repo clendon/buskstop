@@ -6,7 +6,6 @@ import Modal from './Modal.jsx' //eslint-disable-line
 
 const Feed = ({ performances, performer }) => {
   const [showModal, setShowModal] = useState(false);
-  let modalContent = performances[0];
 
   const modalHandler = (e) => {
     // modalContent = performances[index];
