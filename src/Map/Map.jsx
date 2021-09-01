@@ -64,7 +64,6 @@ function Map() {
       <Fragment>
         <div id="map-google" className="w-screen h-full max-h-full overflow-scroll">
         <GoogleMap
-          onLoad={loadHandler}
           onClick={e => setClickedLatLng(e.latLng.toJSON())}
           center={center}
           zoom={zoom}
