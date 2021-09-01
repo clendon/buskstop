@@ -1,8 +1,21 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcryptjs');
+const passportLocal = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const mongoose = require('mongoose');
+const keys = require('../../env/config');
+// commented out for now
+// const bodyParser = require('body-parser')
+
+const User = require('../database/user');
+const passportSetup = require('./passportConfig');
+
 const database = require('../database/index');
 
 // create server
@@ -16,6 +29,8 @@ app.use(cors({
   origin: 'https://localhost:3000',
   credentials: true,
 }));
+// app.use(cookieParser('secretCode'));
+// TODO: fix this, session is not defined and breaks the server trying to run the code
 app.use(session({
   secret: 'secretcode',
   resave: true,
@@ -24,8 +39,23 @@ app.use(session({
 app.use(cookieParser('secretcode'));
 app.use(passport.initialize());
 app.use(passport.session());
+// TODO: this passport file is broken, prevents server from running
+// passport.use(new GoogleStrategy());
 require('./passportConfig')(passport);
 
+// path to database
+// eslint-disable-next-line import/no-unresolved
+const db = require('../database/index.js');
+
+// connect to database
+const m = new mongoose.Mongoose();
+m.connect(keys.mongodb.dbURI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+// routes
 // Routes to handle interactions with the Front-end
 /**
  * Routes Needed:
@@ -198,7 +228,7 @@ app.post('/people', (req, res) => {
 // Routes to handle logging in & logging out
 app.post('/login', (req, res) => {
   // eslint-disable-next-line no-unused-vars
-  passport.authentication('local', (err, user, info) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) throw err;
     if (!user) res.send('No User Exists');
     else {
@@ -233,6 +263,32 @@ app.post('/signup', (req, res) => {
 app.get('/user', (req, res) => {
   // store entire user
   res.send(req.user);
+});
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/redirect',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+app.get('/people', (req, res) => {
+  database.models.people.find()
+    .exec()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.log('you have an err', err);
+      res.end();
+    });
+});
+app.post('/people', (req, res) => {
+  res.sendStatus(201);
 });
 
 const PORT = 3000;

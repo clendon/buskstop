@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-
+const keys = require('../../env/config');
 // Connection
-mongoose.connect('mongodb+srv://Admin:Admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(keys.mongodb.dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 // eslint-disable-next-line no-console
 db.on('error', console.error.bind(console, 'connection error'));
