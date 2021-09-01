@@ -6,6 +6,7 @@ import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
 import Login from './Login/login.jsx';
 import Audience from './Audience/Audience.jsx';
+import Performer from './Performer/Performer.jsx';
 
 // sample user data for rendering Audience component
 const sampleUser = {
@@ -34,7 +35,7 @@ const App = () => (
           <MapView />
         </Route>
         <Route exact path="/performer/:id">
-          {/* filler */}
+          <Performer />
         </Route>
         <Route exact path="/search">
           <Search />
