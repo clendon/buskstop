@@ -1,4 +1,4 @@
-const people = 'people';
+const people = 'buskers';
 
 export const params = {
   people,

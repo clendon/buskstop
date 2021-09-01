@@ -10,7 +10,6 @@ module.exports = {
         "plugin:react/recommended",
         "airbnb",
         "airbnb/hooks",
-        "plugin:react/jsx-runtime"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -26,5 +25,6 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "no-console": "off",
     }
 };

@@ -10,14 +10,17 @@ const Hamburger = () => {
     setOpen(!open);
   };
 
+  // so this is going to need state in order to not render the performances link
+  // will also need state for user's ID
+
   return (
     <>
-      {open && 
+      {open &&
         <div className="flex flex-col border border-black rounded w-max absolute bottom-10">
-          <a href="#" className="border-b border-black">map</a>
+          <a href="#/map" className="border-b border-black">map</a>
           <a href="#" className="border-b border-black">feed</a>
           <a href="#" className="border-b border-black">your performances</a>
-          <a href="#" className="border-b border-black">search all buskers</a>
+          <a href="#/search" className="border-b border-black">search all buskers</a>
           <a href="#">logout</a>
         </div>
       }
