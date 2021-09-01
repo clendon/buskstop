@@ -6,6 +6,7 @@ export default function Login() {
   const [signUpPassword, setSignUpPassword] = useState('');
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+
   const signUp = () => {
     axios({
       method: 'POST',
@@ -40,29 +41,25 @@ export default function Login() {
   };
 
   return (
-    <>
-      <form>
+    <div className="flex flex-col border border-black h-full justify-evenly">
+      <form className="border-2 border-black flex flex-col justify-between">
         <h3>SignUp</h3>
-        <label>Username:</label>
-        <input type="text" onChange={(e) => setSignUpUsername(e.target.value)} />
+        <label for="username">Username:</label>
+        <input autofocus className="border border-yellow-600 rounded" type="text" onChange={(e) => setSignUpUsername(e.target.value)} name="username"/>
         <label>Password:</label>
-        <input type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
-        <button onClick={signUp}>Submit</button>
+        <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
       </form>
 
-      <form>
+      <form className="border-2 border-black flex flex-col">
         <h3>Login</h3>
         <label>Username:</label>
-        <input type="text" onChange={(e) => setLoginUsername(e.target.value)} />
+        <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setLoginUsername(e.target.value)} />
         <label>Password:</label>
-        <input type="text" onChange={(e) => setLoginPassword(e.target.value)} />
-        <button onClick={login}>Submit</button>
+        <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setLoginPassword(e.target.value)} />
       </form>
 
-      <form>
-        <h3>Get User</h3>
-        <button onClick={getUser}>Submit</button>
-      </form>
-    </>
+        <button className=" h-10 bg-yellow-600 rounded border border-black border-4" onClick={getUser}>Submit</button>
+
+    </div>
   );
 }
