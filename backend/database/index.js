@@ -24,7 +24,7 @@ const peopleSchema = new Schema({
   Description: String,
   image: String,
   AudienceorPerformer: String,
-  followers: [
+  Followers: [
     String,
   ],
 });
