@@ -20,7 +20,7 @@ function Map() {
   const [infoOpen, setInfoOpen] = useState(false);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: ''
+    googleMapsApiKey: 'AIzaSyA9WCwVPxocNs_WAMQOARzSL08i5NJn8u4'
   });
 
   const fitBounds = map => {
