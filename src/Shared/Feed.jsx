@@ -16,7 +16,7 @@ const Feed = ({ performances, performer }) => {
 
   return (
     <>
-      <div className="border border-black rounded flex flex-col justify-center">
+      <div className="border border-blackrounded flex flex-col justify-center">
         {performances && performances.map((item, index) => (
           <Card performance={item} key={index} onClick={modalHandler} />
         ))}
@@ -25,14 +25,19 @@ const Feed = ({ performances, performer }) => {
   );
 };
 
-const Card = ({performance}) => (
-  <div className="border border-black rounded flex flex-wrap justify-evenly">
-    <p>{performance.name}</p>
-    <p>{performance.location}</p>
-    <p>{performance.category}</p>
-    <p>{performance.date}</p>
-    <p>{performance.time}</p>
-  </div>
-);
+const Card = ({performance}) => {
+  const deleteHandler = () => {};
+
+  return (
+    <div className=" border border-black rounded flex flex-col justify-evenly">
+      <div>{performance.name}</div>
+      <div>{performance.location}</div>
+      <div>{performance.category}</div>
+      <div>{performance.date}</div>
+      <div>{performance.time}</div>
+      <button className="border-2 border-yellow-600 rounded" type="button">delete</button>
+    </div>
+  );
+};
 
 export default Feed;
