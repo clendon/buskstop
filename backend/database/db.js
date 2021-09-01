@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const keys = require('../../env/config');
 
 const m = new mongoose.Mongoose();
-m.connect('mongodb+srv://Admin:Admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+m.connect(keys.mongodb.dbURI,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
