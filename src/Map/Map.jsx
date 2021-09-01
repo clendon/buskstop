@@ -23,7 +23,7 @@ function Map() {
   const [infoOpen, setInfoOpen] = useState(false);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: keys.googleMaps.API
+    googleMapsApiKey: keys.googleMaps.API,
   });
 
   const fitBounds = map => {
