@@ -18,7 +18,7 @@ function Map() {
   const [data, setData] = useState(() => {
     axios.get('/buskers').then((response) => setData(response.data));
 });
-  const [zoom, setZoom] = useState(4);
+  const [zoom, setZoom] = useState(2);
   const [clickedLatLng, setClickedLatLng] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
 
@@ -55,7 +55,7 @@ function Map() {
     setInfoOpen(true);
 
     if (zoom > 13) {
-      setZoom(20);
+      setZoom(4);
     }
   };
 
