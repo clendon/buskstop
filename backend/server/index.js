@@ -8,11 +8,11 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const passportLocal = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
+const mongoose = require('mongoose');
+const keys = require('../../env/config');
 // commented out for now
 // const bodyParser = require('body-parser')
 
-const mongoose = require('mongoose');
 const User = require('../database/user');
 const passportSetup = require('./passportConfig');
 
@@ -49,7 +49,7 @@ const db = require('../database/index.js');
 
 // connect to database
 const m = new mongoose.Mongoose();
-m.connect('mongodb+srv://Admin:Admin@cedar-dev.q0mjf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+m.connect(keys.mongodb.dbURI,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

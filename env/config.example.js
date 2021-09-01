@@ -9,4 +9,7 @@ module.exports = {
     clientID: '',
     clientSecret: '',
   },
+  googleMaps: {
+    API: '',
+  },
 };

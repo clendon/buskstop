@@ -1,55 +1,43 @@
-import React, { useState } from 'react';
-//this component assumes that it's getting passed a 'performances' prop which is an array of objects
-//for now, it also assumes that each 'performance' looks like the sample objects below
-//it also assumes a 'performer' prop which is true if it's getting displayed on a performer's home page (as opposed to an audience member's)
+import React, { useState } from 'react'; //eslint-disable-line
+import Modal from './Modal.jsx' //eslint-disable-line
+// this component assumes that it's getting passed a performances prop which is an array of objects
+// for now, it also assumes that each 'performance' looks like the sample objects in App
+// it also assumes a performer prop which is true if user is performer
 
-const samplePerformances = [
-  {
-    name: 'Mickey Mack',
-    location: 'Bushwick',
-    category: 'Freeform Jazz',
-    date: 'Tuesday, Aug. 31',
-    time: '08:30PM'
-  },
-  {
-    name: 'Raymond T. Raymonds',
-    location: 'House of Blues',
-    category: 'Standup Comedy',
-    date: 'Wednesday, Sep. 1',
-    time: '08:30PM'
-  },
-  {
-    name: 'Miss Sky Hawaii',
-    location: 'D.A.R. Constitution Hall',
-    category: 'Rock',
-    date: 'Thursday, Sep. 2nd',
-    time: '08:30PM'
-  },
-];
+const Feed = ({ performances, performer }) => {
+  const [showModal, setShowModal] = useState(false);
 
-const Feed = ({performances, performer}) => {
+  const modalHandler = (e) => {
+    // modalContent = performances[index];
+    // setShowModal(!showModal);
+    e.preventDefault();
+    console.log('modal here!');
+  };
+
   return (
-    <div className="border border-black rounded flex flex-col justify-center">
-      {performer && 
-        <button className="border border-black rounded">Add a Performance</button>
-      }
-      {performances && performances.map((item, index) => (
-        <Card performance={item} key={index}/>
-      ))}
-    </div>
+    <>
+      <div className="border border-blackrounded flex flex-col justify-center">
+        {performances && performances.map((item, index) => (
+          <Card performance={item} key={index} onClick={modalHandler} />
+        ))}
+      </div>
+    </>
   );
 };
 
 const Card = ({performance}) => {
+  const deleteHandler = () => {};
+
   return (
-    <div className="border border-black rounded flex flex-wrap justify-evenly">
-      <p>{performance.name}</p>
-      <p>{performance.location}</p>
-      <p>{performance.category}</p>
-      <p>{performance.date}</p>
-      <p>{performance.time}</p>
+    <div className=" border border-black rounded flex flex-col justify-evenly">
+      <div>{performance.name}</div>
+      <div>{performance.location}</div>
+      <div>{performance.category}</div>
+      <div>{performance.date}</div>
+      <div>{performance.time}</div>
+      <button className="border-2 border-yellow-600 rounded" type="button">delete</button>
     </div>
-  ); 
+  );
 };
 
 export default Feed;
