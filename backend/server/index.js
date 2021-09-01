@@ -98,6 +98,8 @@ app.get('/buskers/:category', async ({ params }, res) => {
 });
 
 // 3) Need to ADD Below
+// --------------Audience View--------------------------------------
+
 // --------------Performer View--------------------------------------
 
 // 4)
@@ -105,8 +107,7 @@ app.get('/buskers/:name/events', async ({ params }, res) => {
   const { name } = params;
   await database.findBuskerByName(name)
     .then((results) => {
-      // NOTE: This result Object must be reconfigured to Handle events properly.
-      res.send(results);
+      res.send(results[0].Events);
     })
     .catch((err) => {
       res.send(err);
@@ -120,11 +121,10 @@ app.post('/buskers/:name/events', async ({ params, body }, res) => {
     location: body.location,
     coordinates: body.coordinates,
     date: body.date,
-    time: body.time,
   };
   await database.addEventFor(name, newEvent)
-    .then(() => {
-      res.send(201);
+    .then((result) => {
+      res.status(201).send(result);
     })
     .catch((err) => {
       res.send(err);
@@ -134,12 +134,9 @@ app.post('/buskers/:name/events', async ({ params, body }, res) => {
 // 6)
 app.put('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
-  const updatedEvent = {
-    event: body,
-  };
-  await database.updateEventFor(name, updatedEvent)
+  await database.updateEventFor(name, body)
     .then(() => {
-      res.send(204);
+      res.sendStatus(204);
     })
     .catch((err) => {
       res.status(400).send(err);
@@ -149,10 +146,9 @@ app.put('/buskers/:name/events', async ({ params, body }, res) => {
 // 7)
 app.delete('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
-  const eventToBeDeleted = body;
-  await database.deleteEventFor(name, eventToBeDeleted)
+  await database.deleteEventFor(name, body)
     .then(() => {
-      res.send(204);
+      res.sendStatus(204);
     })
     .catch((err) => {
       res.status(400).send(err);
@@ -279,21 +275,21 @@ app.get('/auth/google/redirect',
     res.redirect('/');
   });
 
-app.get('/people', (req, res) => {
-  database.models.people.find()
-    .exec()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log('you have an err', err);
-      res.end();
-    });
-});
-app.post('/people', (req, res) => {
-  res.sendStatus(201);
-});
+// app.get('/people', (req, res) => {
+//   database.models.people.find()
+//     .exec()
+//     .then((data) => {
+//       res.json(data);
+//     })
+//     .catch((err) => {
+//       // eslint-disable-next-line no-console
+//       console.log('you have an err', err);
+//       res.end();
+//     });
+// });
+// app.post('/people', (req, res) => {
+//   res.sendStatus(201);
+// });
 
 const PORT = 3000;
 
