@@ -1,47 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import MapModal from './MapModal.jsx';
+import axios from 'axios';
+import config from '../../env/config.js';
 import NewPerformance from './NewPerformance.jsx';
 import PerformerInfo from './PerformerInfo.jsx';
 import PerformerTile from './PerformerTile.jsx';
-import axios from 'axios';
 
-const Performer = (props) => {
-  const performances = [1, 2, 3];
-  const [log, setLog] = useState();
-  const [mapOpen, setmapOpen] = useState(false);
-  const locality = 'Boston MA'
-  const country = 'United States'
+const Performer = () => {
   const [latLng, setLatLng] = useState();
+  const [mapOpen, setmapOpen] = useState(false);
+  const performances = [1, 2, 3];
+  const locality = 'Boston MA';
+  const country = 'United States';
 
-  const check = (ee) => {
-    console.log(ee)
-  }
-
-  useEffect(()=>{
-
-    let config = {
+  // sets the default coordinates to the area the busker is located in
+  const setMapArea = () => {
+    const configAxios = {
       method: 'get',
-      url: `https://maps.googleapis.com/maps/api/geocode/json?components=locality:${locality}|country:${country}&key=${''}`,
-      headers: { }
+      url: `https://maps.googleapis.com/maps/api/geocode/json?components=locality:${locality}|country:${country}&key=${config.googleMaps.API}`,
+      headers: { },
     };
 
-    axios(config)
-    .then((response) => {
-      setLatLng(response.data.results[0].geometry.location)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    axios(configAxios)
+      .then((response) => {
+        setLatLng(response.data.results[0].geometry.location);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-
-
-  },[])
-
+  useEffect(() => {
+    setMapArea();
+  }, []);
 
   return (
     <div>
       <PerformerInfo />
-      <NewPerformance setmapOpen={setmapOpen} latLng={latLng}/>
+      <NewPerformance setmapOpen={setmapOpen} latLng={latLng} />
       {performances.map(() => <PerformerTile />)}
     </div>
 
