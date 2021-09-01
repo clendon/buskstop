@@ -13,14 +13,14 @@ function Map() {
   const [markerMap, setMarkerMap] = useState({});
   const [center, setCenter] = useState({ lat: 40.7128, lng: -74.0060 });
   const [data, setData] = useState(() => {
-    axios.get('/people').then((response) => setData(response.data));
+    axios.get('/buskers').then((response) => setData(response.data));
 });
   const [zoom, setZoom] = useState(5);
   const [clickedLatLng, setClickedLatLng] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: ''
+    googleMapsApiKey: 'AIzaSyA9WCwVPxocNs_WAMQOARzSL08i5NJn8u4'
   });
 
   const fitBounds = map => {
@@ -59,6 +59,7 @@ function Map() {
   const renderMap = () => {
     return (
       <Fragment>
+        <div id="map-google" className="w-screen h-full max-h-full overflow-scroll">
         <GoogleMap
           onLoad={loadHandler}
           onClick={e => setClickedLatLng(e.latLng.toJSON())}
@@ -66,7 +67,7 @@ function Map() {
           zoom={zoom}
           mapContainerStyle={{
             height: "70vh",
-            width: "150vh"
+            width: "100vh"
           }}
         >
           {data.map(busker => (
@@ -77,7 +78,7 @@ function Map() {
               onClick={event => markerClickHandler(event, busker)}
               icon={{
                 path:
-                  "M12.75 0l-2.25 2.25 2.25 2.25-5.25 6h-5.25l4.125 4.125-6.375 8.452v0.923h0.923l8.452-6.375 4.125 4.125v-5.25l6-5.25 2.25 2.25 2.25-2.25-11.25-11.25zM10.5 12.75l-1.5-1.5 5.25-5.25 1.5 1.5-5.25 5.25z",
+                "M12.75 0l-2.25 2.25 2.25 2.25-5.25 6h-5.25l4.125 4.125-6.375 8.452v0.923h0.923l8.452-6.375 4.125 4.125v-5.25l6-5.25 2.25 2.25 2.25-2.25-11.25-11.25zM10.5 12.75l-1.5-1.5 5.25-5.25 1.5 1.5-5.25 5.25z",
                 fillColor: "#ff4500",
                 fillOpacity: 1.0,
                 strokeWeight: 0,
@@ -85,7 +86,7 @@ function Map() {
               }}
             />
           ))}
-
+      <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
           {infoOpen && selectedBusker && (
             <InfoWindow
               anchor={markerMap[selectedBusker["ID"]]}
@@ -93,28 +94,18 @@ function Map() {
             >
               <div>
                 <h3>{selectedBusker["Name"]}</h3>
+                <hr></hr>
+                <div className="h5">{selectedBusker["AudienceorPerformer"]}</div>
+                <hr></hr>
                 <div>{selectedBusker["Description"]}</div>
                 <div>
                 <img className="object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
             </div>
               </div>
             </InfoWindow>
-          )}
+          )}</div>
         </GoogleMap>
-
-        <h3>
-          Center {center.lat}, {center.lng}
-        </h3>
-
-        {clickedLatLng && (
-          <h3>
-            Current Location: {clickedLatLng.lat}, {clickedLatLng.lng}
-          </h3>
-        )}
-
-        {selectedBusker && <h3>Selected Busker: {selectedBusker["ID"]}<br></br> Location: {selectedBusker["Location"]} <br></br>{selectedBusker["Description"]} <br></br>
-        <img className="object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
-        </h3>}
+        </div>
       </Fragment>
     );
   };
