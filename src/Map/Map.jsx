@@ -6,6 +6,7 @@ import {
   InfoWindow,
 } from '@react-google-maps/api';
 import axios from 'axios';
+const keys = require('../../env/config');
 
 function Map() {
   const [mapRef, setMapRef] = useState(null);
@@ -20,7 +21,7 @@ function Map() {
   const [infoOpen, setInfoOpen] = useState(false);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: ''
+    googleMapsApiKey: keys.googleMaps.API
   });
 
   const fitBounds = map => {
