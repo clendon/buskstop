@@ -26,7 +26,7 @@ const samplePerformances = [
 ];
 
 const Audience = ({ profile }) => (
-  <Feed performances={samplePerformances} />
+  <Feed performances={samplePerformances} performer={profile.performer}/>
 );
 
 export default Audience;
