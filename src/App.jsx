@@ -34,7 +34,7 @@ const App = () => (
         <Route exact path="/map">
           <MapView />
         </Route>
-        <Route exact path="/performer/:id">
+        <Route exact path="/performer">
           <Performer />
         </Route>
         <Route exact path="/search">
