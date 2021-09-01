@@ -6,17 +6,19 @@ import {
   InfoWindow,
 } from '@react-google-maps/api';
 import axios from 'axios';
+import useWindowDimensions from "./useWindowDimensions.jsx";
 const keys = require('../../env/config');
 
 function Map() {
+  const { height, width } = useWindowDimensions();
   const [mapRef, setMapRef] = useState(null);
   const [selectedBusker, setSelectedBusker] = useState(null);
   const [markerMap, setMarkerMap] = useState({});
-  const [center, setCenter] = useState({ lat: 40.7128, lng: -74.0060 });
+  const [center, setCenter] = useState({ lat: 42.7128, lng: -73.0060 });
   const [data, setData] = useState(() => {
     axios.get('/buskers').then((response) => setData(response.data));
 });
-  const [zoom, setZoom] = useState(5);
+  const [zoom, setZoom] = useState(4);
   const [clickedLatLng, setClickedLatLng] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
 
@@ -26,10 +28,10 @@ function Map() {
 
   const fitBounds = map => {
     const bounds = new window.google.maps.LatLngBounds();
-    data.map(busker => {
-      bounds.extend({ lat: Number(busker["Coordinates"].split(" ").join().split(",")[2]), lng: Number(busker["Coordinates"].split(" ").join().split(",")[5])});
-      return data.id;
-    });
+    // data.map(busker => {
+    //   bounds.extend({ lat: Number(busker["Coordinates"].split(" ").join().split(",")[2]), lng: Number(busker["Coordinates"].split(" ").join().split(",")[5])});
+    //   return data.id;
+    // });
     map.fitBounds(bounds);
   };
 
@@ -52,8 +54,8 @@ function Map() {
 
     setInfoOpen(true);
 
-    if (zoom < 13) {
-      setZoom(5);
+    if (zoom > 13) {
+      setZoom(20);
     }
   };
 
@@ -67,8 +69,8 @@ function Map() {
           center={center}
           zoom={zoom}
           mapContainerStyle={{
-            height: "70vh",
-            width: "100vh"
+            height: window.innerHeight - 40,
+            width: window.innerWidth
           }}
         >
           {data.map(busker => (
