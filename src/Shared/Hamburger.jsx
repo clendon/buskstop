@@ -17,7 +17,7 @@ const Hamburger = () => {
     <>
       {open &&
         <div className="flex flex-col border border-black rounded w-max absolute bottom-10">
-          <a href="#/map" className="border-b border-black">map</a>
+          <a oncClick={clickHandler} href="#/map" className="border-b border-black">map</a>
           <a href="#" className="border-b border-black">feed</a>
           <a href="#" className="border-b border-black">your performances</a>
           <a href="#/search" className="border-b border-black">search all buskers</a>
