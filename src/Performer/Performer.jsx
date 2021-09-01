@@ -4,7 +4,6 @@ import NewPerformance from './NewPerformance.jsx';
 import PerformerInfo from './PerformerInfo.jsx';
 import PerformerTile from './PerformerTile.jsx';
 import axios from 'axios';
-import API_KEY from '../../config/config.js';
 
 const Performer = (props) => {
   const performances = [1, 2, 3];
@@ -22,7 +21,7 @@ const Performer = (props) => {
 
     let config = {
       method: 'get',
-      url: `https://maps.googleapis.com/maps/api/geocode/json?components=locality:${locality}|country:${country}&key=${API_KEY}`,
+      url: `https://maps.googleapis.com/maps/api/geocode/json?components=locality:${locality}|country:${country}&key=${''}`,
       headers: { }
     };
 

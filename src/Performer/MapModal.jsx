@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import API_KEY from '../../config/config';
 class MainMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: [
+      marker:
         {
           title: '',
           name: '',
@@ -14,18 +13,18 @@ class MainMap extends Component {
             lng: null,
           }
         }
-      ]
+
     };
     this.onClick = this.onClick.bind(this);
   }
 
   changeCoord(e) {
-    const lat = this.state.markers[0].position.lat
-    const long = this.state.markers[0].position.lat
+    const lat = this.state.marker.position.lat
+    const long = this.state.marker.position.lat
     if ( lat === null &&  long === null){
       alert('Please select a location')
     } else {
-      this.props.setNewCoord(this.state.markers[0].position)
+      this.props.setNewCoord(this.state.marker.position)
       this.props.setMapOpen(false)
     }
   }
@@ -36,16 +35,13 @@ class MainMap extends Component {
     const lng = latLng.lng();
     this.props.check(t);
 
-    this.setState(previousState => {
-      return {
-        markers: [
+    this.setState({
+        marker:
           {
             title: '',
             name: '',
             position: { lat, lng },
           }
-        ]
-      };
     });
   }
 
@@ -65,14 +61,11 @@ class MainMap extends Component {
             lng: this.props.latLng.lng,
           }}
         >
-          {this.state.markers.map((marker, index) => (
             <Marker
-              key={index}
-              title={marker.title}
-              name={marker.name}
-              position={marker.position}
+              title={this.state.marker.title}
+              name={this.state.marker.name}
+              position={this.state.marker.position}
             />
-          ))}
         </Map>
       </div>
     );
@@ -80,7 +73,7 @@ class MainMap extends Component {
 }
 
 const MapModal = GoogleApiWrapper({
-  apiKey: (API_KEY)
+  apiKey: ('')
 })(MainMap);
 
 export default MapModal;
