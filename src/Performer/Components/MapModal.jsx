@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import config from '../../env/config';
+import config from '../../../env/config';
 
 const MainMap = ({setNewCoord, setMapOpen, google, latLngOG}) => {
 
