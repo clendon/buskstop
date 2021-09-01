@@ -275,21 +275,21 @@ app.get('/auth/google/redirect',
     res.redirect('/');
   });
 
-app.get('/people', (req, res) => {
-  database.models.people.find()
-    .exec()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log('you have an err', err);
-      res.end();
-    });
-});
-app.post('/people', (req, res) => {
-  res.sendStatus(201);
-});
+// app.get('/people', (req, res) => {
+//   database.models.people.find()
+//     .exec()
+//     .then((data) => {
+//       res.json(data);
+//     })
+//     .catch((err) => {
+//       // eslint-disable-next-line no-console
+//       console.log('you have an err', err);
+//       res.end();
+//     });
+// });
+// app.post('/people', (req, res) => {
+//   res.sendStatus(201);
+// });
 
 const PORT = 3000;
 
