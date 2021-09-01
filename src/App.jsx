@@ -23,9 +23,26 @@ const sampleUser = {
 
 const App = () => (
   <div className="h-screen max-h-screen flex flex-col min-h-full justify-between items-stretch">
-
+    <Router>
+      <Switch>
+        <Route exact path="/audience">
+          <Audience profile={sampleUser} />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/map">
+          <MapView />
+        </Route>
+        <Route exact path="/performer/:id">
           <Performer />
-
+        </Route>
+        <Route exact path="/search">
+          <Search />
+        </Route>
+      </Switch>
+    </Router>
+    <Footer menu />
   </div>
 );
 
