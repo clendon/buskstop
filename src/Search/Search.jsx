@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import Busker from './Components/Busker.jsx';
+import SearchBar from '../Shared/SearchBar.jsx';
+import axios from 'axios';
 import { params } from '../Shared/variables.js';
+
+const buskerSearch = `http://localhost:3000/${params.people}`
 
 const Search = function() {
   const [buskers, setBuskers] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/${params.people}`)
+    axios.get(buskerSearch)
       .then(({ data }) => {
         setBuskers(data);
       });
@@ -17,9 +20,20 @@ const Search = function() {
     console.log(buskers);
   }, [buskers]);
 
+  const handleSubmit = function(event, input) {
+    event.preventDefault();
+    axios.get(`${buskerSearch}/${input}`)
+      .then(({ data }) => {
+        setBuskers(data);
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  };
+
   return (
     <div id="search-page" className="w-screen h-full max-h-full">
-      <div>This will be the search bar component</div>
+      <SearchBar handleSubmit={handleSubmit} />
       <div id="search-display" className="max-h-full overflow-scroll">
         {buskers.map((busker) => <Busker key={busker.ID} busker={busker} />)}
       </div>
