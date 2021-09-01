@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
 import MapModal from './MapModal.jsx';
 import Form from './Form.jsx';
-const NewPerformance = () => {
+const NewPerformance = (props) => {
   const performances = [1, 2, 3];
-  const [log, setLog] = useState();
-  const [mapOpen, setmapOpen] = useState(false);
-  const [showModal, setShowModal] = React.useState(false);
-  const check = (ee) => {
-    console.log(ee)
-  }
+  const [showModal, setShowModal] = useState(false);
+  const [time, setTime] = useState(null);
+  const [newCoord, setNewCoord] = useState(null);
 
+
+  const clearSelections = () => {
+    setTime(null)
+    setNewCoord(null)
+    setShowModal(false)
+  }
 
 
   return (
     <>
+    <div className="flex flex-col justify-center items-center content-center bg-green-500">
       <button
         className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
         onClick={() => setShowModal(true)}
       >
-        Open small modal
+        Add Performance
       </button>
+
+    </div>
       {showModal ? (
         <>
           <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-40 outline-none focus:outline-none"
           >
             <div className="relative w-auto my-6 mx-auto max-w-sm">
               {/*content*/}
@@ -45,14 +51,14 @@ const NewPerformance = () => {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <Form />
+                  <Form time={time} location={newCoord} latLng={props.latLng} setTime={setTime} setNewCoord={setNewCoord} />
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={clearSelections}
                   >
                     Close
                   </button>
@@ -67,7 +73,7 @@ const NewPerformance = () => {
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          <div className="opacity-25 fixed inset-0 z-20 bg-black"></div>
         </>
       ) : null}
     </>

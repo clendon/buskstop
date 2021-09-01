@@ -8,30 +8,29 @@ import Performer from './Performer/Performer.jsx';
 
 const App = () => (
     <div className="h-screen grid grid-flow-col">
-     <Performer />
+      <Router>
+      <Switch>
+        <Route exact path="/audience/:id">
+          {/* filler */}
+        </Route>
+        <Route exact path="/login">
+          {/* filler */}
+        </Route>
+        <Route exact path="/map">
+          <MapView />
+        </Route>
+        <Route exact path="/performer/:id">
+          {/* filler */}
+        </Route>
+        <Route exact path="/search">
+          <Search />
+        </Route>
+      </Switch>
+      </Router>
+      <Footer menu={true}/>
     </div>
 );
 
 export default App;
 
 
-// <Router>
-// <Switch>
-//   <Route exact path="/audience/:id">
-//     {/* filler */}
-//   </Route>
-//   <Route exact path="/login">
-//     {/* filler */}
-//   </Route>
-//   <Route exact path="/map">
-//     <MapView />
-//   </Route>
-//   <Route exact path="/performer/:id">
-//     {<Performer />}
-//   </Route>
-//   <Route exact path="/search">
-//     <Search />
-//   </Route>
-// </Switch>
-// </Router>
-// <Footer menu={true}/>

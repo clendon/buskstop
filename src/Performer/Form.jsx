@@ -1,31 +1,35 @@
 import React, { useState } from 'react';
 import Datetime from "react-datetime";
+import MapModal from './MapModal.jsx';
 
 
-const Form = () => {
+const Form = (props) => {
+
+  const [mapOpen, setMapOpen] = useState(false);
+
+  const check = (ee) => {
+    console.log(ee)
+  }
+
+
+  const log = (e) => {
+    console.log(e);
+  }
   return (
     <form className="bg-white px-8 pt-6 pb-8 mb-4">
-    <div className="mb-4">
-      <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
-        City
-      </label>
-      <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="City"/>
-    </div>
     <div className="mb-6">
-      <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
-        Time
-      </label>
-      <Datetime initialValue={Date.now()}/>
+      <div className="flex flex-col items-center justify-center text-gray-700 text-sm font-bold mb-2">
+        {props.time !== null ? 'Time Selected' : 'Select Time'}
+        <Datetime onChange={e=>props.setTime(e._i)} initialValue={Date.now()}/>
+      </div>
 
     </div>
-    <div className="flex flex-col items-center justify-between">
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-        Choose Location
+    <div className="flex flex-col items-center justify-center">
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={()=>setMapOpen(true)}>
+      {props.location !== null ? 'Location Selected' : 'Choose Location'}
       </button>
-      <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-        Forgot Password?
-      </a>
     </div>
+    {mapOpen ? <MapModal setMapOpen={setMapOpen} setNewCoord={props.setNewCoord} latLng={props.latLng} check={check}/> : null}
   </form>);
 }
 
