@@ -17,8 +17,8 @@ const peopleSchema = new Schema({
   Events: [
     {
       location: String,
-      Coordinates: String,
-      date: Date,
+      coordinates: String,
+      date: String,
     } || undefined,
   ],
   Description: String,
@@ -40,24 +40,27 @@ const findBuskerByCategory = async (category) => People.find({ Category: categor
 const findBuskerByName = async (name) => People.find({ Name: name });
 
 const addEventFor = async (name, event) => {
-  // eslint-disable-next-line no-console
-  console.log(name);
-  // eslint-disable-next-line no-console
-  console.log(event);
+  const newEvent = {
+    location: event.location,
+    coordinates: event.coordinates,
+    date: event.date,
+  };
+  await People.updateOne({ Name: name }, { $push: { Events: newEvent } });
 };
 
 const updateEventFor = async (name, event) => {
-  // eslint-disable-next-line no-console
-  console.log(name);
-  // eslint-disable-next-line no-console
-  console.log(event);
+  const newEvent = {
+    location: event.location,
+    coordinates: event.coordinates,
+    date: event.date,
+  };
+
+  await People.findOneAndUpdate({ Name: name, 'Events.coordinate': event.coordinates }, { $set: { 'Events.$': newEvent } });
 };
 
 const deleteEventFor = async (name, event) => {
-  // eslint-disable-next-line no-console
-  console.log(name);
-  // eslint-disable-next-line no-console
-  console.log(event);
+  // eslint-disable-next-line max-len
+  await People.findOneAndUpdate({ Name: name }, { $pull: { Events: { location: event.location } } });
 };
 
 const deleteProfileFor = async (name) => People.findOneAndDelete({ Name: name });
