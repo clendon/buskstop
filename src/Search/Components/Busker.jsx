@@ -10,7 +10,7 @@ const Busker = function({ busker }) {
 
   //TODO: remove borders, add dropshadow to bottom
   return (
-    <div onClick={handleClick} className={(isOpen ? "h-auto" : "h-36") + " border-black border-solid border-1 grid relative grid-rows-3 grid-cols-2 bg-gray-600"}>
+    <div onClick={handleClick} className={(isOpen ? "h-auto" : "h-36") + " m-1 border-transparent rounded grid relative grid-rows-3 grid-cols-2 bg-gray-600"}>
       <div>
         <span>{busker.Name}</span>
         <span className="row-start-2">{busker.Category}</span>
