@@ -109,14 +109,14 @@ function Map() {
               anchor={markerMap[selectedBusker["ID"]]}
               onCloseClick={() => setInfoOpen(false)}
             >
-              <div className="w-screen h-full max-h-full overflow-scroll">
+              <div className="">
                 <h3>{selectedBusker["Name"]}</h3>
                 <hr></hr>
                 <div className="h5">{selectedBusker["Category"]}</div>
                 <hr></hr>
                 <div>{selectedBusker["Description"]}</div>
                 <div>
-                <img className="object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
+                <img className="mx-auto object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
             </div>
               </div>
             </InfoWindow>
