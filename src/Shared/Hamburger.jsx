@@ -17,7 +17,7 @@ const Hamburger = () => {
     <>
       {open &&
         (
-        <div className="flex flex-col border border-black rounded w-max absolute bottom-10">
+        <div className="flex flex-col border border-black rounded w-max absolute bottom-10 bg-white">
           <a href="#/map" className="border-b border-black">map</a>
           <a href="#/audience" className="border-b border-black">feed</a>
           <a href="#/performer" className="border-b border-black">your performances</a>
@@ -37,5 +37,3 @@ const Hamburger = () => {
 };
 
 export default Hamburger;
-
-
