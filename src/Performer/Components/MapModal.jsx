@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import config from '../../../env/config';
 
 const MainMap = ({setNewCoord, setMapOpen, google, latLngOG}) => {
@@ -59,7 +59,7 @@ const MainMap = ({setNewCoord, setMapOpen, google, latLngOG}) => {
       </Map>
     </div>
   );
-}
+};
 
 const MapModal = GoogleApiWrapper({
   apiKey: (config.googleMaps.API),
