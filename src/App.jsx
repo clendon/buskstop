@@ -7,7 +7,7 @@ import Search from './Search/Search.jsx';
 import Login from './Login/login.jsx';
 import Audience from './Audience/Audience.jsx';
 import Performer from './Performer/Performer.jsx';
-
+import Shrek from './Shared/Shrek.jsx';
 // sample user data for rendering Audience component
 const sampleUser = {
   id: 1, // need to ask nick to change this to int
@@ -39,6 +39,9 @@ const App = () => (
         </Route>
         <Route exact path="/search">
           <Search />
+        </Route>
+        <Route exact path="/shrek">
+          <Shrek />
         </Route>
       </Switch>
     </Router>
