@@ -26,14 +26,27 @@ const samplePerformances = [
   },
 ];
 
-const Audience = (props) => {
+const Audience = ( {name} ) => {
   {/* <Feed performances={samplePerformances} performer={profile.performer}/> */}
-  if (!props.name) {
+  const [following, setFollowing] = useState([]);
+  const [performances, setPerformances] = useState([]);
+
+  if (name) {
     return <Redirect to="/login"/>  
   } 
+  
+  useEffect(async () => {
+    try {
+      const followingList = await fetch(`http://localhost:3000/users/${name}/following`);
+      console.log(followingList);
+    } catch (err) {
+      console.error(err);
+    } 
+  }, []);
 
   return (
-    <div>props.name</div>
+    <div>
+    </div>
   );
 };
 
