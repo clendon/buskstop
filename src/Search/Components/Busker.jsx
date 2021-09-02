@@ -9,7 +9,7 @@ const Busker = function({ busker }) {
 
   //TODO: remove borders, add dropshadow to bottom
   return (
-    <div onClick={handleClick} className={(isOpen ? "h-52" : "h-36") + " border-black border-solid border-2 grid relative grid-rows-2 grid-cols-2 bg-yellow-600"}>
+    <div onClick={handleClick} className={(isOpen ? "h-52" : "h-36") + " border-black border-solid border-2 grid relative grid-rows-2 grid-cols-2 bg-yellow-800"}>
       <div>
         <span>{busker.Name}</span>
         <span className="row-start-2">{busker.Category}</span>
@@ -17,12 +17,10 @@ const Busker = function({ busker }) {
       <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
         <img className="max-h-full max-w-full object-contain" src={busker.image} alt="" />
       </div>
-    </div>
-    {isOpen && () => {
-      <>
+      {isOpen && (() => {
 
-      </>
-    }}
+      })()}
+    </div>
   );
 };
 
