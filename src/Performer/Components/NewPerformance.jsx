@@ -1,18 +1,91 @@
-import React, { useState } from 'react';
-import MapModal from './MapModal.jsx';
+import React, { useState, useEffect } from 'react';
+import config from '../../../env/config.js';
+import axios from 'axios';
 import Form from './Form.jsx';
 
-const NewPerformance = ({latLng}) => {
+const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
   const performances = [1, 2, 3];
   const [showModal, setShowModal] = useState(false);
   const [time, setTime] = useState(null);
   const [newCoord, setNewCoord] = useState(null);
+  const [streetAddress, setStreetAddress] = useState(null);
 
+  const newEvent = {
+    location: streetAddress,
+    coordinates: `{ lat: ${newCoord?.lat}, lng: ${newCoord?.lng} }`,
+    date: time,
+  };
+
+  //clears data when modal closed
   const clearSelections = () => {
     setTime(null);
     setNewCoord(null);
     setShowModal(false);
   };
+
+  //retrieves street address of chosen location
+  const getStreetAddress = () => {
+    if(newCoord) {
+      const configStreetAdd = {
+        method: 'get',
+        url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${newCoord.lat},${newCoord.lng}&key=${config.googleMaps.API}`,
+        headers: { },
+      };
+
+      console.log(configStreetAdd);
+
+      axios(configStreetAdd)
+        .then((response) => {
+          setStreetAddress(response.data.results[0].formatted_address);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    }
+  }
+
+  const createNewEvent = () => {
+
+    //creates event if proper info selected
+    if(newCoord !== null && time !== null && streetAddress !== null) {
+      let data = JSON.stringify(newEvent);
+
+      let configPost = {
+        method: 'post',
+        url: `http://localhost:3000/buskers/${profile.Name}/events`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data : data
+      };
+
+      axios(configPost)
+      .then((response) => {
+        getBuskerProfile()
+        alert('Event Created');
+      })
+      .catch((error) => {
+        alert(error);
+      });
+      setShowModal(false)
+
+    }
+    //warns user of missing info for event
+      var output = ''
+      if (newCoord === null) {
+        output+= 'Please choose a location\n'
+      }
+      if (time === null) {
+        output+= 'Please choose a time\n'
+      }
+      alert(output)
+  }
+
+  useEffect(() => {
+    getStreetAddress();
+
+  }, [newCoord]);
 
   return (
     <>
@@ -66,7 +139,7 @@ const NewPerformance = ({latLng}) => {
                   <button
                     className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={createNewEvent}
                   >
                     Create
                   </button>

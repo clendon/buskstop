@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 
-const PerformerTile = (props) => {
-  const location = 'location';
-  const date = 'date';
+const PerformerTile = ({event}) => {
+  const location = event.location;
+  const date = moment(Number(event.date)).format('MMMM Do YYYY, h:mm:ss a');
   return (
     <div className="w-screen pt-3 bg-red-300 ">
       <div className="flex flex-row min-w-full bg-purple-600">
