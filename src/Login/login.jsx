@@ -43,7 +43,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col h-full justify-evenly items-center">
+    <div className={`flex flex-col h-full justify-evenly items-center ${showModal ? 'backdrop-filter backdrop-brightness-75' : ''}`}>
       {showModal && 
         (
           <Modal onClick={(e) => {setShowModal(false)}}> 
