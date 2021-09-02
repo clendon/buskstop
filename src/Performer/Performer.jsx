@@ -65,7 +65,7 @@ const Performer = () => {
       <PerformerInfo profile={profile}/>
       <NewPerformance getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} />
       {/* <Feed performances={profile.Events}/> */}
-      {profile.Events.map((event) => <PerformerTile event={event} />)}
+      {profile.Events.map((event) => <PerformerTile key={event._id} event={event} />)}
     </div>
   );
 
