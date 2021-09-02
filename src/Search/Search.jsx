@@ -32,9 +32,9 @@ const Search = function() {
   };
 
   return (
-    <div id="search-page" className="w-screen h-full max-h-full flex flex-col bg-gray-700">
-      <SearchBar handleSubmit={handleSubmit} />
-      <div id="search-display" className="overflow-scroll w-screen mb-10">
+    <div id="search-page" className="w-screen h-full flex flex-col bg-gray-700 lg:items-center">
+      <SearchBar handleSubmit={handleSubmit} width={'lg:w-10/12'} upperMargin={'lg:mt-28'}/>
+      <div id="search-display" className="overflow-y-scroll w-screen mb-10 lg:center lg:h-4/6 lg: lg:w-10/12 lg:mb-0 lg:mt-16">
         {buskers.map((busker) => <Busker key={busker.ID} busker={busker} />)}
       </div>
     </div>
