@@ -64,9 +64,9 @@ const Performer = () => {
   return (
     <div>
       <PerformerInfo profile={profile}/>
-      <NewPerformance getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} />{ClosingAlert()}
-
-      {profile.Events.map((event) => <PerformerTile key={event._id} getBuskerProfile={getBuskerProfile} buskerName={buskerName} event={event} />)}
+      <NewPerformance getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} />
+      {/* <Feed performances={profile.Events}/> */}
+      {profile.Events.map((event) => <PerformerTile key={event._id} event={event} />)}
     </div>
   );
 
