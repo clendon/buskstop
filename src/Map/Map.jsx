@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import {
-  useLoadScript,
+  useJsApiLoader,
   GoogleMap,
   Marker,
   InfoWindow,
@@ -10,21 +10,32 @@ import useWindowDimensions from "./useWindowDimensions.jsx";
 const keys = require('../../env/config');
 
 function Map() {
+  const [data, setData] = useState(() => {
+    axios.get('/buskers').then((response) => setData(response.data));
+});
   const { height, width } = useWindowDimensions();
   const [mapRef, setMapRef] = useState(null);
   const [selectedBusker, setSelectedBusker] = useState(null);
   const [markerMap, setMarkerMap] = useState({});
   const [center, setCenter] = useState({ lat: 40.7357, lng: -74.7724 });
-  const [data, setData] = useState(() => {
-    axios.get('/buskers').then((response) => setData(response.data));
-});
   const [zoom, setZoom] = useState(8);
   const [clickedLatLng, setClickedLatLng] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
 
-  const { isLoaded } = useLoadScript({
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
     googleMapsApiKey: keys.googleMaps.API,
   });
+
+  useEffect(() => {
+      axios.get('/buskers').then((response) => setData(response.data));
+  });
+
+  const onLoad = React.useCallback(function callback(x) {
+    const bounds = new window.google.maps.LatLngBounds();
+    x.fitBounds(bounds);
+    setMapRef(x)
+  }, []);
 
   const fitBounds = map => {
     const bounds = new window.google.maps.LatLngBounds();
@@ -72,7 +83,7 @@ function Map() {
             width: window.innerWidth
           }}
         >
-          {data.map(busker => (
+          {data?.map(busker => (
             <Marker
               key={busker["ID"]}
               position={{ lat: Number(busker["Coordinates"].split(" ").join().split(",")[2]), lng: Number(busker["Coordinates"].split(" ").join().split(",")[5])}}
