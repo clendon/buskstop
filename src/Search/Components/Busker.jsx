@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 const Busker = function({busker}) {
 
+  //TODO: remove borders, add dropshadow to bottom
   return (
     <div className="h-36 border-black border-solid border-2 grid relative grid-rows-2 grid-cols-2">
       <span>{busker.Name}</span>

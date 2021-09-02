@@ -17,12 +17,12 @@ const Hamburger = () => {
     <>
       {open &&
         (
-        <div className="flex flex-col border border-black rounded w-max absolute bottom-10">
+        <div className="flex flex-col border border-black rounded w-max absolute bottom-10 bg-white">
           <a href="#/map" className="border-b border-black">map</a>
           <a href="#/audience" className="border-b border-black">feed</a>
           <a href="#/performer" className="border-b border-black">your performances</a>
           <a href="#/search" className="border-b border-black">search all buskers</a>
-          <a href="#logout">logout</a>
+          <a href="#/logout">logout</a>
         </div>
         )}
       <button type="button" onClick={clickHandler} className="border border-black rounded px-1 max-w-max">
@@ -37,5 +37,3 @@ const Hamburger = () => {
 };
 
 export default Hamburger;
-
-
