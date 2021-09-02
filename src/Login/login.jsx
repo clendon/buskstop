@@ -23,14 +23,16 @@ export default function Login() {
     axios({
       method: 'POST',
       data: {
-        username: signUpUsername,
-        password: signUpPassword,
+        username: loginUsername,
+        password: loginPassword,
       },
       withCredentials: true,
       url: 'http://localhost:3000/login',
     })
-      .then((res) => console.log(res));
+      .then((res) => console.log(res))
+      .catch((err) => console.log('ERROR:', err));
   };
+
   const getUser = () => {
     axios({
       method: 'GET',
@@ -41,25 +43,33 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col border border-black h-full justify-evenly">
-      <form className="border-2 border-black flex flex-col justify-between">
+    <>
+      <form>
         <h3>SignUp</h3>
-        <label for="username">Username:</label>
-        <input autofocus className="border border-yellow-600 rounded" type="text" onChange={(e) => setSignUpUsername(e.target.value)} name="username"/>
+        <label>Username:</label>
+        <input type="text" onChange={(e) => setSignUpUsername(e.target.value)} />
         <label>Password:</label>
-        <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
+        <input type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
+        <button onClick={signUp}>Submit</button>
       </form>
 
-      <form className="border-2 border-black flex flex-col">
+      <form>
         <h3>Login</h3>
         <label>Username:</label>
-        <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setLoginUsername(e.target.value)} />
+        <input type="text" onChange={(e) => setLoginUsername(e.target.value)} />
         <label>Password:</label>
-        <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setLoginPassword(e.target.value)} />
+        <input type="text" onChange={(e) => setLoginPassword(e.target.value)} />
+        <button onClick={login}>Submit</button>
       </form>
 
-        <button className=" h-10 bg-yellow-600 rounded border border-black border-4" onClick={getUser}>Submit</button>
-
-    </div>
+      <form>
+        <h3>Get User</h3>
+        <button onClick={getUser}>Submit</button>
+      </form>
+      <a href="/auth/google">
+        <img src="https://onymos.com/wp-content/uploads/2020/10/google-signin-button-1024x260.png" alt="pic" height="300px" width="300px" />
+      </a>
+      <a href="/logout">Logout</a>
+    </>
   );
 }

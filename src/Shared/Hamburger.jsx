@@ -22,7 +22,7 @@ const Hamburger = () => {
           <a href="#/audience" className="border-b border-black">feed</a>
           <a href="#/performer" className="border-b border-black">your performances</a>
           <a href="#/search" className="border-b border-black">search all buskers</a>
-          <a href="#logout">logout</a>
+          <a href="/logout">logout</a>
         </div>
         )}
       <button type="button" onClick={clickHandler} className="border border-black rounded px-1 max-w-max">

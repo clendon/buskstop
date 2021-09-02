@@ -10,18 +10,13 @@ const passportLocal = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../../env/config');
-// commented out for now
-// const bodyParser = require('body-parser')
-
-const User = require('../database/user');
 const passportSetup = require('./passportConfig');
-
 const database = require('../database/index');
 
 // create server
 const app = express();
 
-// middleware
+// --------------MIDDLEWARE------------------------------------------
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
@@ -29,8 +24,6 @@ app.use(cors({
   origin: 'https://localhost:3000',
   credentials: true,
 }));
-// app.use(cookieParser('secretCode'));
-// TODO: fix this, session is not defined and breaks the server trying to run the code
 app.use(session({
   secret: 'secretcode',
   resave: true,
@@ -42,18 +35,6 @@ app.use(passport.session());
 // TODO: this passport file is broken, prevents server from running
 // passport.use(new GoogleStrategy());
 require('./passportConfig')(passport);
-
-// path to database
-// eslint-disable-next-line import/no-unresolved
-const db = require('../database/index.js');
-
-// connect to database
-const m = new mongoose.Mongoose();
-m.connect(keys.mongodb.dbURI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
 
 /**
  * // --------------ROUTES------------------------------------------
@@ -90,6 +71,17 @@ app.get('/buskers', async (req, res) => {
 app.get('/buskers/:category', async ({ params }, res) => {
   const { category } = params;
   await database.findBuskerByCategory(category)
+    .then((results) => {
+      res.status(201).send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+app.get('/buskers/:cash', async ({ params }, res) => {
+  const { cash } = params;
+  await database.findBuskerByCash(cash)
     .then((results) => {
       res.status(201).send(results);
     })
@@ -212,7 +204,6 @@ app.get('/profile/:name/busker', async ({ params }, res) => {
     .catch((err) => {
       res.send(err);
     });
-  res.send('TEST');
 });
 
 // 12)
@@ -241,33 +232,33 @@ app.delete('/profile/:name', async ({ params }, res) => {
 });
 
 // --------------AUTHENTICATION ROUTES--------------------------------------
-app.post('/login', (req, res) => {
+app.post('/login', (req, res, next) => {
   // eslint-disable-next-line no-unused-vars
   passport.authenticate('local', (err, user, info) => {
     if (err) throw err;
     if (!user) res.send('No User Exists');
     else {
       // eslint-disable-next-line no-shadow
-      req.login(user, (err) => {
+      req.logIn(user, (err) => {
         if (err) throw err;
         res.send('Successfully Authenticated');
         // eslint-disable-next-line no-console
         console.log(req.user);
       });
     }
-  });
-  // eslint-disable-next-line no-unused-expressions
-  (req, res);
+  })(req, res, next);
 });
 
-app.post('/signup', (req, res) => {
-  database.models.NewUser.findOne({ username: req.body.username }, async (err, doc) => {
+app.post('/signup', ({ body }, res) => {
+  const { username, password } = body;
+  database.models.NewUser.findOne({ username }, async (err, doc) => {
     if (err) throw err;
     if (doc) res.send('User Already Exists');
     if (!doc) {
+      const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new database.models.NewUser({
-        username: req.body.username,
-        password: req.body.password,
+        username,
+        password: hashedPassword,
       });
       await newUser.save();
       res.send('User Created');
@@ -281,7 +272,9 @@ app.get('/user', (req, res) => {
 });
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  }));
 
 app.get('/auth/google/redirect',
   passport.authenticate('google', { failureRedirect: '/login' }),
@@ -289,6 +282,14 @@ app.get('/auth/google/redirect',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
+
+app.get('/logout', (req, res) => {
+  // console.log('req:::', req)
+  // database.deleteGoogleId(req.sessionID)
+  // console.log('lessgooooooo', req.sessionID)
+  req.logout();
+  res.redirect('/');
+});
 
 // app.get('/people', (req, res) => {
 //   database.models.people.find()

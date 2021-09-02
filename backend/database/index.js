@@ -14,6 +14,7 @@ const peopleSchema = new Schema({
   ID: String,
   Name: String,
   Category: String || undefined,
+  Cash: String,
   Events: [
     {
       location: String,
@@ -45,6 +46,8 @@ const findBuskers = async () => People.find({ AudienceorPerformer: 'Performer' }
 const findBuskerByCategory = async (category) => People.find({ Category: category });
 
 const findBuskerByName = async (name) => People.find({ Name: name });
+
+const findBuskerByCash = async (cash) => People.find({ Cash: cash });
 
 const deleteProfileFor = async (name) => People.findOneAndDelete({ Name: name });
 
@@ -97,8 +100,10 @@ const unFollowerPerformer = async (name, performer) => {
 // --------------NEWUSER SCEMA AND MODEL-------------------------------------
 
 const newUserSchema = new Schema({
+  googleId: String,
   username: String,
   password: String,
+  sessionID: String,
 });
 const NewUser = mongoose.model('users', newUserSchema);
 
@@ -132,4 +137,5 @@ module.exports = {
   unFollowerPerformer,
   deleteProfileFor,
   addNewUser,
+  findBuskerByCash,
 };
