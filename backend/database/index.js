@@ -8,7 +8,7 @@ db.on('error', console.error.bind(console, 'connection error'));
 // eslint-disable-next-line no-console
 db.once('open', () => console.log('Connected to MongoDB'));
 
-// Schema for People (ALL USERS)
+// --------------SCHEMA & MODEL FOR USERS--------------------------------------
 const { Schema } = mongoose;
 const peopleSchema = new Schema({
   ID: String,
@@ -25,20 +25,30 @@ const peopleSchema = new Schema({
   image: String,
   AudienceorPerformer: String,
   Followers: [
-    String,
+    {
+      follower: String,
+    },
+  ],
+  Following: [
+    {
+      user: String,
+    },
   ],
 });
 
-// Model for People
 const People = mongoose.model('people', peopleSchema, 'people');
 
-// Functions correlating to the People Collection
+// --------------FUNCTIONS FOR PEOPLE MODEL-------------------------------------
+// --------------Buskers---------------
 const findBuskers = async () => People.find({ AudienceorPerformer: 'Performer' });
 
 const findBuskerByCategory = async (category) => People.find({ Category: category });
 
 const findBuskerByName = async (name) => People.find({ Name: name });
 
+const deleteProfileFor = async (name) => People.findOneAndDelete({ Name: name });
+
+// --------------Events----------------
 const addEventFor = async (name, event) => {
   const newEvent = {
     location: event.location,
@@ -63,7 +73,28 @@ const deleteEventFor = async (name, event) => {
   await People.findOneAndUpdate({ Name: name }, { $pull: { Events: { location: event.location } } });
 };
 
-const deleteProfileFor = async (name) => People.findOneAndDelete({ Name: name });
+// --------Followers/following----------
+
+const followPerformer = async (name, performer) => {
+  const userfollow = {
+    follower: name,
+  };
+
+  const followerPerformer = {
+    user: performer,
+  };
+  await People.updateOne({ Name: performer }, { $push: { Followers: userfollow } });
+
+  await People.updateOne({ Name: name }, { $push: { Following: followerPerformer } });
+};
+
+const unFollowerPerformer = async (name, performer) => {
+  await People.findOneAndUpdate({ Name: performer }, { $pull: { Followers: { follower: name } } });
+
+  await People.findOneAndUpdate({ Name: name }, { $pull: { Following: { user: performer } } });
+};
+
+// --------------NEWUSER SCEMA AND MODEL-------------------------------------
 
 const newUserSchema = new Schema({
   username: String,
@@ -97,6 +128,8 @@ module.exports = {
   addEventFor,
   updateEventFor,
   deleteEventFor,
+  followPerformer,
+  unFollowerPerformer,
   deleteProfileFor,
   addNewUser,
 };

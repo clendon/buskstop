@@ -55,23 +55,24 @@ m.connect(keys.mongodb.dbURI,
     useUnifiedTopology: true,
   });
 
-// routes
-// Routes to handle interactions with the Front-end
 /**
- * Routes Needed:
+ * // --------------ROUTES------------------------------------------
  *   1) GET Buskers
  *   2) GET Buskers - delinineated by category
- *   3) GET Performers by followers <-- NEED TO ADD
+ * Audience View
+ *   3) GET Performers being followed by specfic user
+ *   4) POST new follow on a Performer
+ *   5) PATCH follower on a Performer
  * Performer View
- *   4) GET thier own performances
- *   5) POST new performance
- *   6) PUT - edit performance (params will include properties included within the events doc)
- *   7) DELETE a performance OR all performances
- *   8) GET number of followers
+ *   6) GET Followers by Busker
+ *   7) GET thier own performances
+ *   8) POST new performance
+ *   9) PATCH - edit performance (params will include properties included within the events doc)
+ *  10) DELETE a performance OR all performances
  * Mixed
- *   9) GET profile - Busker
- *  10) GET profile - audience member
- *  11) DELETE profile
+ *  11) GET profile - Busker
+ *  12) GET profile - audience member
+ *  13) DELETE profile
  */
 
 // 1)
@@ -97,12 +98,56 @@ app.get('/buskers/:category', async ({ params }, res) => {
     });
 });
 
-// 3) Need to ADD Below
 // --------------Audience View--------------------------------------
+// 3)
+app.get('/users/:name/following', async ({ params }, res) => {
+  const { name } = params;
+  await database.findBuskerByName(name)
+    .then((results) => {
+      res.send(results[0].Following);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+// 4)
+app.post('/users/:name/follow', async ({ params, user }, res) => {
+  const { name } = params;
+  await database.followPerformer(user, name)
+    .then((results) => {
+      res.status(201).send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
 
+// 5)
+app.patch('/users/:name/unfollow', async ({ params, user }, res) => {
+  const { name } = params;
+  await database.unFollowerPerformer(user, name)
+    .then((results) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
 // --------------Performer View--------------------------------------
 
-// 4)
+// 6)
+app.get('/buskers/:name/followers', async ({ params }, res) => {
+  const { name } = params;
+  await database.findBuskerByName(name)
+    .then((results) => {
+      res.send(results[0].Followers);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// 7)
 app.get('/buskers/:name/events', async ({ params }, res) => {
   const { name } = params;
   await database.findBuskerByName(name)
@@ -114,7 +159,7 @@ app.get('/buskers/:name/events', async ({ params }, res) => {
     });
 });
 
-// 5)
+// 8)
 app.post('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
   const newEvent = {
@@ -131,8 +176,8 @@ app.post('/buskers/:name/events', async ({ params, body }, res) => {
     });
 });
 
-// 6)
-app.put('/buskers/:name/events', async ({ params, body }, res) => {
+// 9)
+app.patch('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
   await database.updateEventFor(name, body)
     .then(() => {
@@ -143,7 +188,7 @@ app.put('/buskers/:name/events', async ({ params, body }, res) => {
     });
 });
 
-// 7)
+// 10)
 app.delete('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
   await database.deleteEventFor(name, body)
@@ -155,21 +200,8 @@ app.delete('/buskers/:name/events', async ({ params, body }, res) => {
     });
 });
 
-// 8)
-app.get('/buskers/:name/followers', async ({ params }, res) => {
-  const { name } = params;
-  await database.findBuskerByName(name)
-    .then((results) => {
-      // NOTE: This result Object must be reconfigured to Handle followers properly.
-      res.send(results);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
-
 // --------------Mixed--------------------------------------
-// 9)
+// 11)
 app.get('/profile/:name/busker', async ({ params }, res) => {
   const { name } = params;
   await database.findBuskerByName(name)
@@ -183,7 +215,7 @@ app.get('/profile/:name/busker', async ({ params }, res) => {
   res.send('TEST');
 });
 
-// 10)
+// 12)
 app.get('profile/:name/audience', async ({ params }, res) => {
   const { name } = params;
   await database.findBuskerByName(name)
@@ -196,7 +228,7 @@ app.get('profile/:name/audience', async ({ params }, res) => {
     });
 });
 
-// 11)
+// 13)
 app.delete('/profile/:name', async ({ params }, res) => {
   const { name } = params;
   await database.deleteProfileFor(name)
@@ -208,24 +240,7 @@ app.delete('/profile/:name', async ({ params }, res) => {
     });
 });
 
-// --------------RANDOM TO BE DELETED--------------------------------------
-app.get('/people', (req, res) => {
-  database.models.people.find()
-    .exec()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log('you have an err', err);
-      res.end();
-    });
-});
-app.post('/people', (req, res) => {
-  res.sendStatus(201);
-});
-
-// Routes to handle logging in & logging out
+// --------------AUTHENTICATION ROUTES--------------------------------------
 app.post('/login', (req, res) => {
   // eslint-disable-next-line no-unused-vars
   passport.authenticate('local', (err, user, info) => {
