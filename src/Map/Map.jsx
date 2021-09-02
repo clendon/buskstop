@@ -13,6 +13,7 @@ function Map() {
   const [data, setData] = useState(() => {
     axios.get('/buskers').then((response) => setData(response.data));
 });
+  const [events, setEvents] = useState({});
   const { height, width } = useWindowDimensions();
   const [mapRef, setMapRef] = useState(null);
   const [selectedBusker, setSelectedBusker] = useState(null);
@@ -28,7 +29,9 @@ function Map() {
   });
 
   useEffect(() => {
+    if (!data) {
       axios.get('/buskers').then((response) => setData(response.data));
+    }
   });
 
   const onLoad = React.useCallback(function callback(x) {
@@ -73,7 +76,7 @@ function Map() {
   const renderMap = () => {
     return (
       <Fragment>
-        <div id="map-google" className="w-screen h-full max-h-full overflow-scroll">
+        <div id="map-google" className="w-screen h-full max-h-full bg-yellow-600 overflow-scroll">
         <GoogleMap
           onClick={e => setClickedLatLng(e.latLng.toJSON())}
           center={center}
@@ -98,6 +101,7 @@ function Map() {
                 scale: 1.25
               }}
             />
+            //busker["Events"]?.map(x => (console.log(x)))
           ))}
       <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
           {infoOpen && selectedBusker && (
@@ -105,10 +109,10 @@ function Map() {
               anchor={markerMap[selectedBusker["ID"]]}
               onCloseClick={() => setInfoOpen(false)}
             >
-              <div>
+              <div className="w-screen h-full max-h-full overflow-scroll">
                 <h3>{selectedBusker["Name"]}</h3>
                 <hr></hr>
-                <div className="h5">{selectedBusker["AudienceorPerformer"]}</div>
+                <div className="h5">{selectedBusker["Category"]}</div>
                 <hr></hr>
                 <div>{selectedBusker["Description"]}</div>
                 <div>
