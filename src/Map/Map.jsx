@@ -13,7 +13,8 @@ function Map() {
   const [data, setData] = useState(() => {
     axios.get('/buskers').then((response) => setData(response.data));
 });
-  const [events, setEvents] = useState({});
+  const [events, setEvents] = useState([]);
+  const [eventLabels, setEventLabels] = useState([]);
   const { height, width } = useWindowDimensions();
   const [mapRef, setMapRef] = useState(null);
   const [selectedBusker, setSelectedBusker] = useState(null);
@@ -31,6 +32,17 @@ function Map() {
   useEffect(() => {
     if (!data) {
       axios.get('/buskers').then((response) => setData(response.data));
+      // axios.get('/buskers/Shrek/events').then((response) => setEvents(response.data));
+    }
+    if (data) {
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]["Events"].length > 0) {
+          events[data[i]["Name"]] = data[i]["Events"];
+          if(eventLabels.indexOf(data[i]["Name"]) === -1){
+            eventLabels.push(data[i]["Name"]);
+          }
+        }
+      }
     }
   });
 
@@ -57,6 +69,12 @@ function Map() {
   const markerLoadHandler = (marker, place) => {
     return setMarkerMap(prevState => {
       return { ...prevState, [place["ID"]]: marker };
+    });
+  };
+
+  const eventLoadHandler = (event, place) => {
+    return setMarkerMap(prevState => {
+      return { ...prevState, [place["_id"]]: event };
     });
   };
 
@@ -103,6 +121,14 @@ function Map() {
             />
             //busker["Events"]?.map(x => (console.log(x)))
           ))}
+          {eventLabels?.map(label => (events[label]?.map(event => (
+            <Marker
+              key={event["_id"]}
+              position={{ lat: Number(event["coordinates"].split(" ").join().split(",")[2]), lng: Number(event["coordinates"].split(" ").join().split(",")[5])}}
+              onLoad={marker => markerLoadHandler(marker, event)}
+              onClick={e => markerClickHandler(e, event)}
+            />
+          ))))}
       <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
           {infoOpen && selectedBusker && (
             <InfoWindow
