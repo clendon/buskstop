@@ -1,5 +1,6 @@
 import React, { useState } from 'react'; //eslint-disable-line
 import Feed from '../Shared/Feed.jsx'; //eslint-disable-line
+import { Redirect } from 'react-router-dom';
 
 const samplePerformances = [
   {
@@ -25,8 +26,15 @@ const samplePerformances = [
   },
 ];
 
-const Audience = ({ profile }) => (
-  <Feed performances={samplePerformances} performer={profile.performer}/>
-);
+const Audience = (props) => {
+  {/* <Feed performances={samplePerformances} performer={profile.performer}/> */}
+  if (!props.name) {
+    return <Redirect to="/login"/>  
+  } 
+
+  return (
+    <div>props.name</div>
+  );
+};
 
 export default Audience;

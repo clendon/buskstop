@@ -26,7 +26,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route exact path="/audience">
-          <Audience profile={sampleUser} />
+          <Audience name={sampleUser.name} />
         </Route>
         <Route exact path="/login">
           <Login />
