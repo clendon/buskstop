@@ -8,10 +8,10 @@ const SearchBar = function({ handleSubmit }) {
   }
 
   return (
-    <div className="h-36">
-      <form onSubmit={(event) => handleSubmit(event, input)}>
-        <input type="text" placeholder="Search Buskers" value={input} onChange={handleChange} />
-        <input type="submit" />
+    <div className="h-10 grid w-full bg-yellow-600">
+      <form onSubmit={(event) => handleSubmit(event, input)} className="align-self-center justify-self-center row-end-3 w-3/5">
+        <input type="text" placeholder="Search Buskers" value={input} onChange={handleChange} className="text-center w-full rounded bg-gray-50" />
+        <input type="submit" className="hidden" />
       </form>
     </div>
   )
