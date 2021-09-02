@@ -39,7 +39,11 @@ const MainMap = ({setNewCoord, setMapOpen, google, latLngOG, createAlert}) => {
 
   return (
     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-40 outline-none focus:outline-none">
-      <button type="button" onClick={(e) => changeCoord(e)} className="text-center fixed bottom-0 z-50 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Location</button>
+      <div className="fixed bottom-0 z-50 ">
+      <button type="button" onClick={(e) => changeCoord(e)} className="text-center mr-5 z-50 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Location</button>
+      <button type="button" onClick={() => setMapOpen(false)} className="text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Close Map</button>
+
+      </div>
       <Map
         google={google}
         style={{ width: '100%', margin: 'auto' }}
