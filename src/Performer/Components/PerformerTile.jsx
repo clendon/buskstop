@@ -20,7 +20,6 @@ const PerformerTile = ({event, getBuskerProfile, buskerName}) => {
 
     axios(configDeleteEvent)
       .then((response) => {
-        getBuskerProfile()
       })
       .catch((error) => {
         console.log(error);

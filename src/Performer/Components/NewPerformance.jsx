@@ -52,6 +52,8 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
     if(newCoord !== null && time !== null && streetAddress !== null) {
       let data = JSON.stringify(newEvent);
 
+      console.log(data)
+
       let configPost = {
         method: 'post',
         url: `http://localhost:3000/buskers/${profile.Name}/events`,
