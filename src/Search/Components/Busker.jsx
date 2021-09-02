@@ -7,6 +7,7 @@ const Busker = function({ busker }) {
     setIsOpen(!isOpen);
   };
 
+  //TODO: remove borders, add dropshadow to bottom
   return (
     <div onClick={handleClick} className={(isOpen ? "h-52" : "h-36") + " border-black border-solid border-2 grid relative grid-rows-2 grid-cols-2 bg-yellow-600"}>
       <div>
