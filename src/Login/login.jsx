@@ -58,9 +58,10 @@ export default function Login() {
         <label>Password:</label>
         <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setLoginPassword(e.target.value)} />
       </form>
-
+      <div className="flex flex-col items-center justify-around h-1/6">
         <button className=" h-10 bg-yellow-600 rounded w-3/4" onClick={getUser}>Submit</button>
-
+        <button className="underline text-xs" onClick={() => {setShowModal(true)}}>Not signed up yet? Click here to register.</button>
+      </div>
     </div>
   );
 }
