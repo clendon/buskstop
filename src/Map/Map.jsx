@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import {
-  useLoadScript,
+  useJsApiLoader,
   GoogleMap,
   Marker,
   InfoWindow,
@@ -10,21 +10,35 @@ import useWindowDimensions from "./useWindowDimensions.jsx";
 const keys = require('../../env/config');
 
 function Map() {
+  const [data, setData] = useState(() => {
+    axios.get('/buskers').then((response) => setData(response.data));
+});
+  const [events, setEvents] = useState({});
   const { height, width } = useWindowDimensions();
   const [mapRef, setMapRef] = useState(null);
   const [selectedBusker, setSelectedBusker] = useState(null);
   const [markerMap, setMarkerMap] = useState({});
-  const [center, setCenter] = useState({ lat: 42.7128, lng: -73.0060 });
-  const [data, setData] = useState(() => {
-    axios.get('/buskers').then((response) => setData(response.data));
-});
-  const [zoom, setZoom] = useState(2);
+  const [center, setCenter] = useState({ lat: 40.7357, lng: -74.7724 });
+  const [zoom, setZoom] = useState(8);
   const [clickedLatLng, setClickedLatLng] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
 
-  const { isLoaded } = useLoadScript({
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
     googleMapsApiKey: keys.googleMaps.API,
   });
+
+  useEffect(() => {
+    if (!data) {
+      axios.get('/buskers').then((response) => setData(response.data));
+    }
+  });
+
+  const onLoad = React.useCallback(function callback(x) {
+    const bounds = new window.google.maps.LatLngBounds();
+    x.fitBounds(bounds);
+    setMapRef(x)
+  }, []);
 
   const fitBounds = map => {
     const bounds = new window.google.maps.LatLngBounds();
@@ -54,15 +68,15 @@ function Map() {
 
     setInfoOpen(true);
 
-    if (zoom > 13) {
-      setZoom(4);
+    if (zoom > 15) {
+      setZoom(8);
     }
   };
 
   const renderMap = () => {
     return (
       <Fragment>
-        <div id="map-google" className="w-screen h-full max-h-full overflow-scroll">
+        <div id="map-google" className="w-screen h-full max-h-full bg-yellow-600 overflow-scroll">
         <GoogleMap
           onClick={e => setClickedLatLng(e.latLng.toJSON())}
           center={center}
@@ -72,7 +86,7 @@ function Map() {
             width: window.innerWidth
           }}
         >
-          {data.map(busker => (
+          {data?.map(busker => (
             <Marker
               key={busker["ID"]}
               position={{ lat: Number(busker["Coordinates"].split(" ").join().split(",")[2]), lng: Number(busker["Coordinates"].split(" ").join().split(",")[5])}}
@@ -87,6 +101,7 @@ function Map() {
                 scale: 1.25
               }}
             />
+            //busker["Events"]?.map(x => (console.log(x)))
           ))}
       <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
           {infoOpen && selectedBusker && (
@@ -94,14 +109,14 @@ function Map() {
               anchor={markerMap[selectedBusker["ID"]]}
               onCloseClick={() => setInfoOpen(false)}
             >
-              <div>
+              <div className="">
                 <h3>{selectedBusker["Name"]}</h3>
                 <hr></hr>
-                <div className="h5">{selectedBusker["AudienceorPerformer"]}</div>
+                <div className="h5">{selectedBusker["Category"]}</div>
                 <hr></hr>
                 <div>{selectedBusker["Description"]}</div>
                 <div>
-                <img className="object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
+                <img className="mx-auto object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
             </div>
               </div>
             </InfoWindow>
