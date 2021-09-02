@@ -7,6 +7,7 @@ const PerformerTile = ({event, getBuskerProfile, buskerName}) => {
   const date = moment(Number(event.date)).format('MMMM Do YYYY, h:mm:ss a');
 
   const deleteEvent = () => {
+    console.log(event, buskerName)
     const data = JSON.stringify(event);
 
     const configDeleteEvent = {
@@ -20,6 +21,8 @@ const PerformerTile = ({event, getBuskerProfile, buskerName}) => {
 
     axios(configDeleteEvent)
       .then((response) => {
+        getBuskerProfile();
+        console.log(response)
       })
       .catch((error) => {
         console.log(error);
@@ -30,10 +33,12 @@ const PerformerTile = ({event, getBuskerProfile, buskerName}) => {
     <div className="w-screen pt-3 bg-red-300 ">
       <div className="flex flex-row min-w-full bg-purple-600">
         <div className="flex flex-col w-4/6 bg-green-500">
-          <div className="bg-green-400">
+          <div className="flex flex-col bg-green-400">
+            <div><b>Location</b></div>
             <div>{location}</div>
           </div>
-          <div className="">
+          <div className="flex flex-col bg-green-400">
+            <div><b>Date</b></div>
             <div>{date}</div>
           </div>
         </div>

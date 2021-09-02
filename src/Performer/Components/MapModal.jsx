@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import config from '../../../env/config';
 
-const MainMap = ({setNewCoord, setMapOpen, google, latLngOG}) => {
+const MainMap = ({setNewCoord, setMapOpen, google, latLngOG, createAlert}) => {
 
   const [marker, setMarker] = useState({
     title: '',
@@ -17,7 +17,7 @@ const MainMap = ({setNewCoord, setMapOpen, google, latLngOG}) => {
     const latt = marker.position.lat;
     const long = marker.position.lat;
     if (latt === null && long === null) {
-      alert('Please select a location');
+      createAlert('Please select a location');
     } else {
       setNewCoord(marker.position);
       setMapOpen(false);

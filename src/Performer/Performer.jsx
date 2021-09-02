@@ -4,18 +4,20 @@ import config from '../../env/config.js';
 import NewPerformance from './Components/NewPerformance.jsx';
 import PerformerInfo from './Components/PerformerInfo.jsx';
 import PerformerTile from './Components/PerformerTile.jsx';
-import ClosingAlert from './Components/Alert.jsx';
+import Alert from './Components/Alert.jsx';
 
 const Performer = () => {
   const [latLng, setLatLng] = useState(null);
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const buskerName = 'Shrek'
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState();
+  const buskerName = 'Shrek';
 
   // sets the default coordinates to the area the busker is located in
   const setMapArea = (object) => {
-    const locality = object.Location.split(',')[0]
-    const country = object.Location.split(',')[1]
+    const locality = object.Location.split(',')[0];
+    const country = object.Location.split(',')[1];
     const profileMap = {
       method: 'get',
       url: `https://maps.googleapis.com/maps/api/geocode/json?components=locality:${locality}|country:${country}&key=${config.googleMaps.API}`,
@@ -51,6 +53,16 @@ const Performer = () => {
       });
 
   }
+  // create custom alert
+  const createAlert = (promptText) => {
+    setShowAlert(true);
+    setAlertText(promptText);
+
+  };
+
+  console.log(alertText, showAlert)
+
+
 
   useEffect(() => {
     getBuskerProfile();
@@ -63,9 +75,9 @@ const Performer = () => {
   return (
     <div>
       <PerformerInfo profile={profile}/>
-      {ClosingAlert('reee')}
-      <NewPerformance getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} />
-      {profile.Events.map((event) => <PerformerTile key={event._id} event={event} getBuskerProfile={getBuskerProfile} />)}
+      {showAlert ? <Alert showAlert={showAlert} setShowAlert={setShowAlert} color="pink" text={alertText}/> : null}
+      <NewPerformance createAlert={createAlert} getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} setShowAlert={setShowAlert} />
+      {profile.Events.map((event) => <PerformerTile key={event._id} buskerName={buskerName} event={event} getBuskerProfile={getBuskerProfile} />)}
     </div>
   );
 
