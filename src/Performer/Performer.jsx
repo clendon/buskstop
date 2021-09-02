@@ -4,7 +4,7 @@ import config from '../../env/config.js';
 import NewPerformance from './Components/NewPerformance.jsx';
 import PerformerInfo from './Components/PerformerInfo.jsx';
 import PerformerTile from './Components/PerformerTile.jsx';
-import Feed from '../Shared/Feed.jsx';
+import ClosingAlert from './Components/Alert.jsx';
 
 const Performer = () => {
   const [latLng, setLatLng] = useState(null);
@@ -63,6 +63,7 @@ const Performer = () => {
   return (
     <div>
       <PerformerInfo profile={profile}/>
+      {ClosingAlert('reee')}
       <NewPerformance getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} />
       {profile.Events.map((event) => <PerformerTile key={event._id} event={event} />)}
     </div>
