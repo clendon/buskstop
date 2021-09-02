@@ -17,12 +17,12 @@ const Hamburger = () => {
     <>
       {open &&
         (
-        <div className="flex flex-col border border-black rounded w-max absolute bottom-10">
-          <a href="#/map" className="border-b border-black">map</a>
-          <a href="#/audience" className="border-b border-black">feed</a>
-          <a href="#/performer" className="border-b border-black">your performances</a>
-          <a href="#/search" className="border-b border-black">search all buskers</a>
-          <a href="/logout">logout</a>
+        <div className="flex flex-col border border-black rounded w-max absolute bottom-10 bg-gray-50">
+          <a href="#/map" className="border-b border-black" onClick={clickHandler}>map</a>
+          <a href="#/audience" className="border-b border-black" onClick={clickHandler}>feed</a>
+          <a href="#/performer" className="border-b border-black" onClick={clickHandler}>your performances</a>
+          <a href="#/search" className="border-b border-black" onClick={clickHandler}>search all buskers</a>
+          <a href="#/logout" onClick={clickHandler}>logout</a>
         </div>
         )}
       <button type="button" onClick={clickHandler} className="border border-black rounded px-1 max-w-max">
@@ -37,5 +37,3 @@ const Hamburger = () => {
 };
 
 export default Hamburger;
-
-
