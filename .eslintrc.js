@@ -28,5 +28,7 @@ module.exports = {
         "no-console": "off",
         "no-underscore-dangle": "off",
         "react/prop-types": "off",
+        "import/extensions": "off",
+        "jsx-quotes": "prefer-single",
     }
 };
