@@ -16,13 +16,14 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
     date: time,
   };
 
+  //clears data when modal closed
   const clearSelections = () => {
     setTime(null);
     setNewCoord(null);
     setShowModal(false);
   };
 
-
+  //retrieves street address of chosen location
   const getStreetAddress = () => {
     if(newCoord) {
       const configStreetAdd = {
@@ -45,6 +46,8 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
   }
 
   const createNewEvent = () => {
+
+    //creates event if proper info selected
     if(newCoord !== null && time !== null && streetAddress !== null) {
       let data = JSON.stringify(newEvent);
 
@@ -68,6 +71,15 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
       setShowModal(false)
 
     }
+    //warns user of missing info for event
+      var output = ''
+      if (newCoord === null) {
+        output+= 'Please choose a location\n'
+      }
+      if (time === null) {
+        output+= 'Please choose a time\n'
+      }
+      alert(output)
   }
 
   useEffect(() => {
