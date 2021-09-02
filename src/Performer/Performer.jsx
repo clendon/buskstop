@@ -4,6 +4,7 @@ import config from '../../env/config.js';
 import NewPerformance from './Components/NewPerformance.jsx';
 import PerformerInfo from './Components/PerformerInfo.jsx';
 import PerformerTile from './Components/PerformerTile.jsx';
+import ClosingAlert from './Components/Alert.jsx';
 import Feed from '../Shared/Feed.jsx';
 
 const Performer = () => {
@@ -63,9 +64,9 @@ const Performer = () => {
   return (
     <div>
       <PerformerInfo profile={profile}/>
-      <NewPerformance getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} />
-      {/* <Feed performances={profile.Events}/> */}
-      {profile.Events.map((event) => <PerformerTile event={event} />)}
+      <NewPerformance getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} />{ClosingAlert()}
+
+      {profile.Events.map((event) => <PerformerTile getBuskerProfile={getBuskerProfile} buskerName={buskerName} event={event} />)}
     </div>
   );
 

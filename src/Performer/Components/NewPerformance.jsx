@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import config from '../../../env/config.js';
+import ClosingAlert from './Alert.jsx';
 import axios from 'axios';
 import Form from './Form.jsx';
 
@@ -79,7 +80,8 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
       if (time === null) {
         output+= 'Please choose a time\n'
       }
-      alert(output)
+      ClosingAlert()
+      //alert(output)
   }
 
   useEffect(() => {
