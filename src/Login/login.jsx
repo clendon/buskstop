@@ -53,7 +53,7 @@ export default function Login() {
               <label>Password:</label>
               <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
             </form>
-            <button type="submit" className=" h-10 bg-yellow-600 rounded w-3/4" onClick={getUser}>Register</button>
+            <button type="submit" className=" h-10 bg-yellow-600 rounded w-3/4" onClick={signUp}>Register</button>
           </Modal>
         )
       }
