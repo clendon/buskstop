@@ -44,14 +44,20 @@ export default function Login() {
 
   return (
     <div className="flex flex-col h-full justify-evenly items-center">
-      {/*<form className="border-2 border-black flex flex-col justify-between">
-        <h3>SignUp</h3>
-        <label for="username">Username:</label>
-        <input autofocus className="border border-yellow-600 rounded" type="text" onChange={(e) => setSignUpUsername(e.target.value)} name="username"/>
-        <label>Password:</label>
-        <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
-      </form>*/}
-
+      {showModal && 
+        (
+          <Modal onClick={(e) => {setShowModal(false)}}> 
+            <p>hi</p>
+          </Modal>
+        )
+      }
+            {/*<form className="border-2 border-black flex flex-col justify-between">
+              <h3>SignUp</h3>
+              <label for="username">Username:</label>
+              <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setSignUpUsername(e.target.value)} name="username"/>
+              <label>Password:</label>
+              <input className="border border-yellow-600 rounded" type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
+            </form>*/}
       <form className="flex flex-col w-3/4 h-1/4 justify-evenly">
         <label>Username:</label>
         <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setLoginUsername(e.target.value)} />
