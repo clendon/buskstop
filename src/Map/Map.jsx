@@ -144,6 +144,12 @@ function Map() {
               position={{ lat: Number(event["coordinates"].split(" ").join().split(",")[2]), lng: Number(event["coordinates"].split(" ").join().split(",")[5])}}
               onLoad={marker => eventLoadHandler(marker, event)}
               onClick={e => eventClickHandler(e, event)}
+              icon={{
+                fillColor: "#d97706",
+                fillOpacity: 1.0,
+                strokeWeight: 0,
+                scale: 1.25
+              }}
             />
           ))))}
       <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
@@ -172,7 +178,7 @@ function Map() {
               onCloseClick={() => setEventOpen(false)}
             >
               <div className="">
-                <h3>{selectedEvent["Name"]}</h3>
+                <h3>{selectedEvent["location"]}</h3>
               </div>
             </InfoWindow>
           )}</div>
