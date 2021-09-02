@@ -116,6 +116,7 @@ function Map() {
                 <hr></hr>
                 <div>{selectedBusker["Description"]}</div>
                 <div>
+
                 <img className="mx-auto object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
             </div>
               </div>
