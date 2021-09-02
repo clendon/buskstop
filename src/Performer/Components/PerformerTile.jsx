@@ -3,7 +3,6 @@ import axios from 'axios';
 import moment from 'moment';
 
 const PerformerTile = ({event, getBuskerProfile, buskerName}) => {
-  console.log(JSON.stringify(event))
   const location = event.location;
   const date = moment(Number(event.date)).format('MMMM Do YYYY, h:mm:ss a');
 
