@@ -10,18 +10,26 @@ const Busker = function({ busker }) {
 
   //TODO: remove borders, add dropshadow to bottom
   return (
-    <div onClick={handleClick} className={(isOpen ? "h-auto" : "h-36") + " m-1 border-transparent rounded grid relative grid-rows-3 grid-cols-2 bg-gray-600"}>
+    <div onClick={handleClick} className='h-auto m-1 border-transparent rounded flex flex-col bg-gray-600'>
+      {/* Name, Category, and User Picture */}
+      <div className='flex flex-row'>
+        {/* Name and Category */}
+        <div className='m-1 bg-gray-50 rounded flex gap-1'>
+          <div>{busker.Name}</div>
+          <div className=''>{busker.Category}</div>
+        </div>
+        {/* User Image */}
+        <div className='m-1 rounded bg-clip-border'>
+          <img className='object-contain' src={busker.image} alt='user profile' />
+        </div>
+      </div>
+      {/* Upcoming Events */}
       <div>
-        <span>{busker.Name}</span>
-        <span className="row-start-2">{busker.Category}</span>
+        {busker.Events.length === 0 ? 'No Upcoming Events' : 'Click To See My Upcoming Events'}
       </div>
-      <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
-        <img className="max-h-full max-w-full object-contain" src={busker.image} alt="" />
-      </div>
-      <div className="row-start-2">
-        { isOpen
-          ? busker.Events.map(event => <LocationView event={event} key={event._id} />)
-          : <div>No Upcoming Events</div> }
+      {/* Events List Section - Only Renders when clicked */}
+      <div className=''>
+        {isOpen && busker.Events.map(event => <LocationView event={event} key={event._id} />)}
       </div>
     </div>
   );
@@ -38,7 +46,10 @@ export default Busker;
  * ]
  * Upcoming Performance
  *
+ * {(isOpen
+      ? "h-auto" : "h-36") + "h-auto m-1 border-transparent rounded flex flex-column bg-gray-600"}
  *
+
 AudienceorPerformer: "Performer"
 Cash: "smelika"
 Category: "Other"
