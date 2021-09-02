@@ -7,10 +7,9 @@ import PerformerTile from './Components/PerformerTile.jsx';
 import Feed from '../Shared/Feed.jsx';
 
 const Performer = () => {
-  const [latLng, setLatLng] = useState();
-  const [profile, setProfile] = useState();
+  const [latLng, setLatLng] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const performances = [1, 2, 3];
   const buskerName = 'Shrek'
 
   // sets the default coordinates to the area the busker is located in
@@ -42,8 +41,9 @@ const Performer = () => {
     axios(configProfile)
       .then((response) => {
         setProfile(response.data[0]);
-        setMapArea(response.data[0]);
-        console.log(response.data[0])
+        if (latLng === null) {
+          setMapArea(response.data[0]);
+        }
         setIsLoading(false);
       })
       .catch((error) => {
@@ -63,9 +63,9 @@ const Performer = () => {
   return (
     <div>
       <PerformerInfo profile={profile}/>
-      <NewPerformance latLng={latLng} />
+      <NewPerformance getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} />
       {/* <Feed performances={profile.Events}/> */}
-      {profile.Events.map(() => <PerformerTile />)}
+      {profile.Events.map((event) => <PerformerTile event={event} />)}
     </div>
   );
 

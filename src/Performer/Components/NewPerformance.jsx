@@ -3,7 +3,7 @@ import config from '../../../env/config.js';
 import axios from 'axios';
 import Form from './Form.jsx';
 
-const NewPerformance = ({latLng}) => {
+const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
   const performances = [1, 2, 3];
   const [showModal, setShowModal] = useState(false);
   const [time, setTime] = useState(null);
@@ -11,12 +11,10 @@ const NewPerformance = ({latLng}) => {
   const [streetAddress, setStreetAddress] = useState(null);
 
   const newEvent = {
-    date: time,
-    coordinates: `{ lat: ${newCoord?.lat}, lng: ${newCoord?.lng} }`,
     location: streetAddress,
+    coordinates: `{ lat: ${newCoord?.lat}, lng: ${newCoord?.lng} }`,
+    date: time,
   };
-
-  console.log(newEvent)
 
   const clearSelections = () => {
     setTime(null);
@@ -48,6 +46,26 @@ const NewPerformance = ({latLng}) => {
 
   const createNewEvent = () => {
     if(newCoord !== null && time !== null && streetAddress !== null) {
+      let data = JSON.stringify(newEvent);
+
+      let configPost = {
+        method: 'post',
+        url: `http://localhost:3000/buskers/${profile.Name}/events`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data : data
+      };
+
+      axios(configPost)
+      .then((response) => {
+        getBuskerProfile()
+        alert('Event Created');
+      })
+      .catch((error) => {
+        alert(error);
+      });
+      setShowModal(false)
 
     }
   }
@@ -109,7 +127,7 @@ const NewPerformance = ({latLng}) => {
                   <button
                     className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={createNewEvent}
                   >
                     Create
                   </button>
