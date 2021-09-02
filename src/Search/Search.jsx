@@ -17,14 +17,28 @@ const Search = function() {
   }, []);
 
   useEffect(() => {
-    console.log(buskers);
+    // console.log(buskers);
   }, [buskers]);
+
+  const findBuskers = function(buskerArray) {
+
+  }
 
   const handleSubmit = function(event, input) {
     event.preventDefault();
-    axios.get(`${buskerSearch}/${input}`)
+    axios.get(`${buskerSearch}`)
       .then(({ data }) => {
-        setBuskers(data);
+        let re = new RegExp(input, 'i');
+        let list = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].Name.search(re) >= 0) {
+            list.push(data[i])
+          }
+        }
+        return list;
+      })
+      .then((list) => {
+        setBuskers(list);
       })
       .catch((err) => {
         console.log(err)
