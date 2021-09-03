@@ -22,7 +22,14 @@ const Busker = function({ busker }) {
           <img className='w-20' src={busker.image} alt='user profile' />
         </div>
       </div>
-
+      {isOpen &&
+        <div className='flex gap-2'>
+          <div className='bg-gray-50 rounded text-center font-bold hover:bg-gray-200 w-9'><div className='transform hover:scale-110 h-full w-full flex items-center justify-center'>🧡</div></div>
+          <a href={`https://cash.app/$${busker.Cash}`} className='flex-grow bg-gray-50 rounded text-center p-1 hover:bg-gray-200'>
+            <button className='rounded text-center font-bold hover:bg-gray-200 text-yellow-600 transform hover:scale-105'>Click Here to Tip Me</button>
+          </a>
+        </div>
+      }
       {/* Expanded View When Clicked */}
       {isOpen &&
         (busker.Events.length === 0

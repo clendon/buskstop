@@ -35,7 +35,7 @@ const LocationView = ({ event, id }) => {
     {isOpen &&
       <>
         <div className='h-auto text-center flex justify-center items-center text-lg'>
-          <a href={`https://www.google.com/maps/search/?api=1&query=${latitude}%2C${longitude}`} className='flex items-center justify-center text-lg text-yellow-600 transform hover:scale-105'>Click Here to View In Google Maps</a>
+          <a href={`https://www.google.com/maps/search/?api=1&query=${latitude}%2C${longitude}`} className='flex items-center justify-center text-lg font-bold text-yellow-600 transform hover:scale-105'>Click Here to View In Google Maps</a>
         </div>
         <div className='text-center flex flex-column justify-center items-center text-lg'>
           <span>{eventDate} at {eventTime}</span>
