@@ -160,7 +160,7 @@ function Map() {
               onCloseClick={() => setInfoOpen(false)}
             >
               <div className="text-center">
-              <div className="text-bg"><h3>{selectedBusker["Name"]}</h3></div>
+              <div className="text-lg"><h3>{selectedBusker["Name"]}</h3></div>
                 <hr></hr>
                 <br></br>
 
@@ -176,14 +176,14 @@ function Map() {
               </div>
             </InfoWindow>
           )}</div>
-      <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
+      <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3 bg-blue-600">
           {eventOpen && selectedEvent && (
             <InfoWindow
               anchor={eventMap[selectedEvent[0]["_id"]]}
               onCloseClick={() => setEventOpen(false)}
             >
               <div className="">
-                <h3>{selectedEvent[1]}</h3>
+                <h3 div className="text-lg text-center">{selectedEvent[1]}</h3>
                 <h3>{selectedEvent[0]["location"]}</h3>
                 <h3>{Date(selectedEvent[0]["date"])}</h3>
               </div>
