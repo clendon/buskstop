@@ -540,6 +540,7 @@ module.exports = {
       0: '0px',
       full: '100%',
       screen: '100vh',
+      116: '116px',
     },
     minWidth: {
       0: '0px',
@@ -802,6 +803,7 @@ module.exports = {
       30: '30',
       40: '40',
       50: '50',
+      60: '60',
     },
   },
   variantOrder: [
