@@ -8,32 +8,27 @@ const Busker = function({ busker }) {
     setIsOpen(!isOpen);
   };
 
-  //TODO: remove borders, add dropshadow to bottom
   return (
-    <div onClick={handleClick} className='h-auto m-1 border-transparent rounded flex flex-col bg-gray-600'>
-      {/* Name, Category, and User Picture */}
-      <div className='flex flex-row'>
+    <div onClick={handleClick} className='h-auto border-transparent rounded flex flex-col bg-gray-600 p-2 gap-4'>
+      {/* Name, Category, and User Picture Container */}
+      <div className='flex flex-row h-20 gap-6'>
         {/* Name and Category */}
-        <div className='m-1 bg-gray-50 rounded flex gap-1'>
-          <div>{busker.Name}</div>
-          <div className=''>{busker.Category}</div>
+        <div className='bg-gray-50 rounded flex gap-1 items-center flex-grow justify-between p-4'>
+          <div className='text-left flex-shrink font-bold'>{busker.Name}</div>
+          <div className='flex-grow text-right italic'>{busker.Category}</div>
         </div>
         {/* User Image */}
-        <div className='m-1 rounded bg-clip-border'>
-          <img className='object-contain' src={busker.image} alt='user profile' />
+        <div className='rounded bg-gray-50 flex overflow-hidden justify-center align-center flex-shrink'>
+          <img className='w-20' src={busker.image} alt='user profile' />
         </div>
       </div>
-      {/* Upcoming Events */}
-      {/* <div>
-        {busker.Events.length === 0 ? 'No Upcoming Events' : 'Click To See My Upcoming Events'}
-      </div> */}
-      {/* Events List Section - Only Renders when clicked */}
-      <div className=''>
-        {isOpen &&
-          (busker.Events.length === 0
-          ? <div className='m-1 bg-gray-50 rounded'>No Upcoming Events</div>
-          : busker.Events.map(event => <LocationView event={event} key={event._id} />))}
-      </div>
+
+      {/* Expanded View When Clicked */}
+      {isOpen &&
+        (busker.Events.length === 0
+        ? <div className='bg-gray-50 rounded text-center p-1'>No Upcoming Events</div>
+        : busker.Events.map(event => <LocationView event={event} key={event._id} />))}
+
     </div>
   );
 };
