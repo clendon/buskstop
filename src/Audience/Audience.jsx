@@ -32,10 +32,10 @@ const Audience = ( {name} ) => {
   const [performances, setPerformances] = useState([]);
 
   if (!name) {
-    return <Redirect to="/login"/>  
-  } 
+    return <Redirect to="/login"/>
+  }
 
-  //need this function to process messy response from db 
+  //need this function to process messy response from db
   const followProcessor = (arr) => {
     const followers = arr.map(item => Object.values(item).slice(0, -1).join(''));
     return followers;
@@ -46,7 +46,7 @@ const Audience = ( {name} ) => {
       const followedList = await fetch(`/users/${name}/following`)
         .then(res => res.json())
         .then(data => followProcessor(data));
-      let events = [];      
+      let events = [];
       console.log(followedList);
       for (const busker of followedList) {
         const eventList = await fetch(`/buskers/${busker}/events`).then(res => res.json());
@@ -62,12 +62,12 @@ const Audience = ( {name} ) => {
       setPerformances(events);
     } catch (err) {
       console.error(err);
-    } 
+    }
   }, []);
 
   return (
-    <div className="h-full">
-      <h3 className="text-xl text-center my-2 text-yellow-600">Your Events</h3>
+    <div className="h-full bg-gray-700 mb-10">
+      <h3 className="text-xl text-center bg-yellow-600 h-10">Your Events</h3>
       {performances.length && <Feed performances={performances}/>}
     </div>
   );
