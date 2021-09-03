@@ -7,11 +7,11 @@ import Search from './Search/Search.jsx';
 import Login from './Login/login.jsx';
 import Audience from './Audience/Audience.jsx';
 import Performer from './Performer/Performer.jsx';
-
+import Shrek from './Shared/Shrek.jsx';
 // sample user data for rendering Audience component
 const sampleUser = {
   id: 1, // need to ask nick to change this to int
-  name: 'Mickey Mack',
+  name: 'Spiderman',
   location: 'Bushwick',
   coordinates: '',
   category: 'Musician',
@@ -26,7 +26,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route exact path="/audience">
-          <Audience profile={sampleUser} />
+          <Audience name={sampleUser.name} />
         </Route>
         <Route exact path="/login">
           <Login />
@@ -39,6 +39,9 @@ const App = () => (
         </Route>
         <Route exact path="/search">
           <Search />
+        </Route>
+        <Route exact path="/shrek">
+          <Shrek />
         </Route>
       </Switch>
     </Router>
