@@ -30,7 +30,7 @@ const Card = ({performance}) => {
 
   return (
     <div className="border shadow-lg my-2 grid grid-rows-2 grid-cols-3 rounded ">
-      <div className="row-span-2 rounded-l bg-yellow-600 text-white grid place-items-center">{performance.name}</div>
+      <div className="row-span-2 rounded-l bg-yellow-600 text-white grid place-items-center uppercase font-bold">{performance.name}</div>
       <div className="col-span-2 row-span-2 mx-2 my-2 min-h-116">
         <div>{performance.location}</div>
         <div>{performance.date}</div>
