@@ -67,10 +67,10 @@ export default function Login() {
       </form>
       <div className="flex flex-col items-center justify-around h-1/6">
         <button type="submit" className=" h-10 bg-yellow-600 rounded w-3/4" onClick={getUser}>Submit</button>
-        <button type="button" className="underline text-xs" onClick={() => {setShowModal(true)}}>Not signed up yet? Click here to register.</button>
         <a href="/auth/google">
           <img src="https://onymos.com/wp-content/uploads/2020/10/google-signin-button-1024x260.png" alt="pic" height="300px" width="300px" />
         </a>
+        <button type="button" className="underline text-xs" onClick={() => {setShowModal(true)}}>Not signed up yet? Click here to register.</button>
       </div>
     </div>
   );
