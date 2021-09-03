@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import config from '../../../env/config.js';
+import ClosingAlert from './Alert.jsx';
 import axios from 'axios';
 import Form from './Form.jsx';
 
-const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
+const NewPerformance = ({latLng, profile, getBuskerProfile, createAlert, setShowAlert}) => {
   const performances = [1, 2, 3];
   const [showModal, setShowModal] = useState(false);
   const [time, setTime] = useState(null);
   const [newCoord, setNewCoord] = useState(null);
   const [streetAddress, setStreetAddress] = useState(null);
+
 
   const newEvent = {
     location: streetAddress,
@@ -31,8 +33,6 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
         url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${newCoord.lat},${newCoord.lng}&key=${config.googleMaps.API}`,
         headers: { },
       };
-
-      console.log(configStreetAdd);
 
       axios(configStreetAdd)
         .then((response) => {
@@ -63,7 +63,7 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
       axios(configPost)
       .then((response) => {
         getBuskerProfile()
-        alert('Event Created');
+        createAlert('Event Created');
       })
       .catch((error) => {
         alert(error);
@@ -79,7 +79,7 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
       if (time === null) {
         output+= 'Please choose a time\n'
       }
-      alert(output)
+      createAlert(output)
   }
 
   useEffect(() => {
@@ -89,9 +89,9 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center content-center bg-green-500">
+      <div className="flex flex-col justify-center items-center content-center">
         <button
-          className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          className="bg-yellow-600 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
           onClick={() => setShowModal(true)}
         >
@@ -121,6 +121,7 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
                 </div>
                 <div className="relative p-6 flex-auto">
                   <Form
+                    createAlert={createAlert}
                     time={time}
                     location={newCoord}
                     latLng={latLng}
