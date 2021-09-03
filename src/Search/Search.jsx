@@ -4,7 +4,7 @@ import SearchBar from '../Shared/SearchBar.jsx';
 import axios from 'axios';
 import { params } from '../Shared/variables.js';
 
-const buskerSearch = `http://localhost:3000/${params.people}`
+const buskerSearch = `http://18.191.245.221/${params.people}`
 
 const Search = function() {
   const [buskers, setBuskers] = useState([]);
