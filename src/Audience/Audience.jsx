@@ -34,11 +34,21 @@ const Audience = ( {name} ) => {
   if (!name) {
     return <Redirect to="/login"/>  
   } 
-  
+
+  //need this function to process messy response from db 
+  const followProcessor = () => {};
+
   useEffect(async () => {
     try {
-      const followingList = await fetch(`http://localhost:3000/users/${name}/following`);
-      console.log(followingList);
+      const followingList = await fetch(`http://localhost:3000/users/${name}/following`)
+      .then(res => res.json());
+      console.log(Object.values(followingList[0]));
+
+      // const post = await fetch(`http://localhost:3000/users/${name}/follow`, {
+      //   method: 'POST',
+      //   body: "Shrek",
+      //   headers: {'Content-Type': 'application/json'}
+      // }).then(res => console.log('post res here', res));
     } catch (err) {
       console.error(err);
     } 
@@ -46,6 +56,7 @@ const Audience = ( {name} ) => {
 
   return (
     <div>
+      audience here
     </div>
   );
 };

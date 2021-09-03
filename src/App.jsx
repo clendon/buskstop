@@ -11,7 +11,7 @@ import Shrek from './Shared/Shrek.jsx';
 // sample user data for rendering Audience component
 const sampleUser = {
   id: 1, // need to ask nick to change this to int
-  name: 'Raymond T. Raymond',
+  name: 'Spiderman',
   location: 'Bushwick',
   coordinates: '',
   category: 'Musician',
