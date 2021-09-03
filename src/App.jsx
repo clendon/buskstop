@@ -22,7 +22,7 @@ const sampleUser = {
 };
 
 const App = () => (
-  <div className="h-screen max-h-screen flex flex-col min-h-full justify-between items-stretch bg-gray-700">
+  <div className="h-screen max-h-screen flex flex-col min-h-full justify-between items-stretch">
     <Router>
       <Header menu/>
       <Switch>

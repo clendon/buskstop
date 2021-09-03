@@ -66,8 +66,8 @@ const Audience = ( {name} ) => {
   }, []);
 
   return (
-    <div className="h-full bg-gray-700 mb-10">
-      <h3 className="text-xl text-center bg-yellow-600 h-10">Your Events</h3>
+    <div className="h-full">
+      <h3 className="text-xl text-center text-yellow-600">Your Events</h3>
       {performances.length && <Feed performances={performances}/>}
     </div>
   );
