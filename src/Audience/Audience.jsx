@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; //eslint-disable-line
+import React, { useState, useEffect } from 'react'; //eslint-disable-line
 import Feed from '../Shared/Feed.jsx'; //eslint-disable-line
 import { Redirect } from 'react-router-dom';
 
@@ -31,7 +31,7 @@ const Audience = ( {name} ) => {
   const [following, setFollowing] = useState([]);
   const [performances, setPerformances] = useState([]);
 
-  if (name) {
+  if (!name) {
     return <Redirect to="/login"/>  
   } 
   
