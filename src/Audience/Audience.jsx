@@ -28,7 +28,6 @@ const samplePerformances = [
 
 const Audience = ( {name} ) => {
   {/* <Feed performances={samplePerformances} performer={profile.performer}/> */}
-  const [following, setFollowing] = useState([]);
   const [performances, setPerformances] = useState([]);
 
   if (!name) {
@@ -43,15 +42,16 @@ const Audience = ( {name} ) => {
 
   useEffect(async () => {
     try {
-      const res = await fetch(`http://localhost:3000/users/${name}/following`)
-      .then(res => res.json());
-      console.log(followProcessor(res));
+      const followedList = await fetch(`/users/${name}/following`)
+        .then(res => res.json())
+        .then(data => followProcessor(data));
+      let events = [];      
+      console.log(followedList);
+      for (const busker of followedList) {
+        const eventList = await fetch(`/buskers/${busker}/events`).then(res => res.json());
+        console.log(eventList);
+      }
 
-      // const post = await fetch(`http://localhost:3000/users/${name}/follow`, {
-      //   method: 'POST',
-      //   body: "Shrek",
-      //   headers: {'Content-Type': 'application/json'}
-      // }).then(res => console.log('post res here', res));
     } catch (err) {
       console.error(err);
     } 
