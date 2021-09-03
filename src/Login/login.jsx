@@ -50,9 +50,9 @@ export default function Login() {
         (
           <Modal onClick={(e) => {setShowModal(false)}}>
             <form className="flex flex-col justify-evenly w-3/4">
-              <label for="username" className="text-yellow-600">Username:</label>
+              <label for="username" className="">Username:</label>
               <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setSignUpUsername(e.target.value)} name="username"/>
-              <label className="text-yellow-600">Password:</label>
+              <label className="">Password:</label>
               <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
             </form>
             <button type="submit" className=" h-10 bg-yellow-600 rounded w-3/4" onClick={signUp}>Register</button>
@@ -60,10 +60,10 @@ export default function Login() {
         )
       }
       <form className="flex flex-col w-3/4 h-1/4 justify-evenly">
-        <label className="text-yellow-600">Username:</label>
-        <input className="border-2 border-yellow-600 rounded bg-gray-50" type="text" onChange={(e) => setLoginUsername(e.target.value)} />
-        <label className="text-yellow-600">Password:</label>
-        <input className="border-2 border-yellow-600 rounded bg-gray-50" type="text" onChange={(e) => setLoginPassword(e.target.value)} />
+        <label className="">Username:</label>
+        <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setLoginUsername(e.target.value)} />
+        <label className="">Password:</label>
+        <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setLoginPassword(e.target.value)} />
       </form>
       <div className="flex flex-col items-center justify-around h-1/6">
         <button type="submit" className=" h-10 bg-yellow-600 rounded w-3/4" onClick={getUser}>Submit</button>
