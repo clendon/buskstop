@@ -24,12 +24,15 @@ const Busker = function({ busker }) {
         </div>
       </div>
       {/* Upcoming Events */}
-      <div>
+      {/* <div>
         {busker.Events.length === 0 ? 'No Upcoming Events' : 'Click To See My Upcoming Events'}
-      </div>
+      </div> */}
       {/* Events List Section - Only Renders when clicked */}
       <div className=''>
-        {isOpen && busker.Events.map(event => <LocationView event={event} key={event._id} />)}
+        {isOpen &&
+          (busker.Events.length === 0
+          ? <div className='m-1 bg-gray-50 rounded'>No Upcoming Events</div>
+          : busker.Events.map(event => <LocationView event={event} key={event._id} />))}
       </div>
     </div>
   );
