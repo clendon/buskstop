@@ -32,31 +32,31 @@ module.exports = function (passport) {
       });
     }),
   );
-  // passport.use(new GoogleStrategy({
-  //   clientID: keys.google.clientID,
-  //   clientSecret: keys.google.clientSecret,
-  //   callbackURL: 'http://localhost:3000/auth/google/redirect',
-  // },
-  // ((request, accessToken, refreshToken, profile, done) => {
-  //   // console.log('profile::::::', profile)
-  //   const authID = `google:${profile.id}`;
-  //   database.models.NewUser.findOne({ googleId: profile.id }).then((currentUser) => {
-  //     if (currentUser) {
-  //       // user already exists
-  //       console.log(`user already exists:${currentUser}`);
-  //       done(null, currentUser);
-  //     } else {
-  //       // create user in db
-  //       new database.models.NewUser({
-  //         username: profile.displayName,
-  //         googleId: profile.id,
-  //       }).save().then((newUser) => {
-  //         console.log(` user created:${newUser}`);
-  //       });
-  //     }
-  //   });
-  //   // cb(null, profile);
-  // })));
+  passport.use(new GoogleStrategy({
+    clientID: keys.google.clientID,
+    clientSecret: keys.google.clientSecret,
+    callbackURL: 'http://localhost:3000/auth/google/redirect',
+  },
+  ((request, accessToken, refreshToken, profile, done) => {
+    // console.log('profile::::::', profile)
+    const authID = `google:${profile.id}`;
+    database.models.NewUser.findOne({ googleId: profile.id }).then((currentUser) => {
+      if (currentUser) {
+        // user already exists
+        console.log(`user already exists:${currentUser}`);
+        done(null, currentUser);
+      } else {
+        // create user in db
+        new database.models.NewUser({
+          username: profile.displayName,
+          googleId: profile.id,
+        }).save().then((newUser) => {
+          console.log(` user created:${newUser}`);
+        });
+      }
+    });
+    // cb(null, profile);
+  })));
   passport.serializeUser((user, cb) => {
     console.log(user);
     cb(null, user.id);
