@@ -9,16 +9,16 @@ const Busker = function({ busker }) {
   };
 
   return (
-    <div onClick={handleClick} className='h-auto border-transparent rounded flex flex-col bg-gray-600 p-2 gap-4'>
+    <div className='h-auto border-transparent rounded flex flex-col bg-yellow-600 p-2 gap-2 hover:bg-yellow-700'>
       {/* Name, Category, and User Picture Container */}
-      <div className='flex flex-row h-20 gap-6'>
+      <div className='flex flex-row h-20 gap-2 ' onClick={handleClick} >
         {/* Name and Category */}
         <div className='bg-gray-50 rounded flex gap-1 items-center flex-grow justify-between p-4'>
-          <div className='text-left flex-shrink font-bold'>{busker.Name}</div>
+          <div className='text-left flex-shrink text-xl font-bold'>{busker.Name}</div>
           <div className='flex-grow text-right italic'>{busker.Category}</div>
         </div>
         {/* User Image */}
-        <div className='rounded bg-gray-50 flex overflow-hidden justify-center align-center flex-shrink'>
+        <div className='rounded bg-gray-50 flex overflow-hidden justify-center content-center flex-shrink'>
           <img className='w-20' src={busker.image} alt='user profile' />
         </div>
       </div>
@@ -27,8 +27,14 @@ const Busker = function({ busker }) {
       {isOpen &&
         (busker.Events.length === 0
         ? <div className='bg-gray-50 rounded text-center p-1'>No Upcoming Events</div>
-        : busker.Events.map(event => <LocationView event={event} key={event._id} />))}
-
+        : (() =>
+          <div className='flex flex-col gap-4 my-2'>
+            {busker.Events.map((event, index) =>
+              <LocationView event={event} key={event._id} id={index} />)}
+          </div>
+          )()
+        )
+      }
     </div>
   );
 };
