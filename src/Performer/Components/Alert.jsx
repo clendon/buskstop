@@ -1,13 +1,10 @@
 import React, {useState} from "react";
 
-const Alert = ({ color,text, showAlert, setShowAlert }) => {
+const Alert = ({text, setShowAlert }) => {
 
-  console.log(showAlert)
   return (
     <>
-
         <div
-
           className={
             "text-white px-6 py-4 border-0 rounded fixed  inset-x-0 top-0 mb-4 bg-yellow-600 z-50"
           }

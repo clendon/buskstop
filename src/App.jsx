@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Route, HashRouter as Router, Switch, Link } from 'react-router-dom'; //eslint-disable-line
 import MapView from './Map/MapView.jsx'
-// import Header from './Shared/Header.jsx';
+import Header from './Shared/Header.jsx';
 import Footer from './Shared/Footer.jsx';
 import Search from './Search/Search.jsx';
 import Login from './Login/login.jsx';
 import Audience from './Audience/Audience.jsx';
 import Performer from './Performer/Performer.jsx';
-
+import Shrek from './Shared/Shrek.jsx';
 // sample user data for rendering Audience component
 const sampleUser = {
   id: 1, // need to ask nick to change this to int
-  name: 'Mickey Mack',
+  name: 'Spiderman',
   location: 'Bushwick',
   coordinates: '',
   category: 'Musician',
@@ -24,9 +24,10 @@ const sampleUser = {
 const App = () => (
   <div className="h-screen max-h-screen flex flex-col min-h-full justify-between items-stretch">
     <Router>
+      <Header menu/>
       <Switch>
         <Route exact path="/audience">
-          <Audience profile={sampleUser} />
+          <Audience name={sampleUser.name} />
         </Route>
         <Route exact path="/login">
           <Login />
@@ -39,6 +40,9 @@ const App = () => (
         </Route>
         <Route exact path="/search">
           <Search />
+        </Route>
+        <Route exact path="/shrek">
+          <Shrek />
         </Route>
       </Switch>
     </Router>

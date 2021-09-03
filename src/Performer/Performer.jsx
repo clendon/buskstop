@@ -60,10 +60,6 @@ const Performer = () => {
 
   };
 
-  console.log(alertText, showAlert)
-
-
-
   useEffect(() => {
     getBuskerProfile();
   }, []);
@@ -73,7 +69,7 @@ const Performer = () => {
   }
 
   return (
-    <div>
+    <div className="">
       <PerformerInfo profile={profile}/>
       {showAlert ? <Alert showAlert={showAlert} setShowAlert={setShowAlert} color="pink" text={alertText}/> : null}
       <NewPerformance createAlert={createAlert} getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} setShowAlert={setShowAlert} />
