@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import config from '../../../env/config.js';
+import ClosingAlert from './Alert.jsx';
 import axios from 'axios';
 import Form from './Form.jsx';
 
-const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
+const NewPerformance = ({latLng, profile, getBuskerProfile, createAlert, setShowAlert}) => {
   const performances = [1, 2, 3];
   const [showModal, setShowModal] = useState(false);
   const [time, setTime] = useState(null);
   const [newCoord, setNewCoord] = useState(null);
   const [streetAddress, setStreetAddress] = useState(null);
+
 
   const newEvent = {
     location: streetAddress,
@@ -51,6 +53,8 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
     if(newCoord !== null && time !== null && streetAddress !== null) {
       let data = JSON.stringify(newEvent);
 
+      console.log(data)
+
       let configPost = {
         method: 'post',
         url: `http://localhost:3000/buskers/${profile.Name}/events`,
@@ -63,7 +67,7 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
       axios(configPost)
       .then((response) => {
         getBuskerProfile()
-        alert('Event Created');
+        createAlert('Event Created');
       })
       .catch((error) => {
         alert(error);
@@ -79,7 +83,8 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
       if (time === null) {
         output+= 'Please choose a time\n'
       }
-      alert(output)
+      createAlert(output)
+      //alert(output)
   }
 
   useEffect(() => {
@@ -121,6 +126,7 @@ const NewPerformance = ({latLng, profile, getBuskerProfile}) => {
                 </div>
                 <div className="relative p-6 flex-auto">
                   <Form
+                    createAlert={createAlert}
                     time={time}
                     location={newCoord}
                     latLng={latLng}
