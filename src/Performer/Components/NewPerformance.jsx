@@ -34,8 +34,6 @@ const NewPerformance = ({latLng, profile, getBuskerProfile, createAlert, setShow
         headers: { },
       };
 
-      console.log(configStreetAdd);
-
       axios(configStreetAdd)
         .then((response) => {
           setStreetAddress(response.data.results[0].formatted_address);
@@ -52,8 +50,6 @@ const NewPerformance = ({latLng, profile, getBuskerProfile, createAlert, setShow
     //creates event if proper info selected
     if(newCoord !== null && time !== null && streetAddress !== null) {
       let data = JSON.stringify(newEvent);
-
-      console.log(data)
 
       let configPost = {
         method: 'post',
@@ -84,7 +80,6 @@ const NewPerformance = ({latLng, profile, getBuskerProfile, createAlert, setShow
         output+= 'Please choose a time\n'
       }
       createAlert(output)
-      //alert(output)
   }
 
   useEffect(() => {

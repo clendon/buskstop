@@ -60,10 +60,6 @@ const Performer = () => {
 
   };
 
-  console.log(alertText, showAlert)
-
-
-
   useEffect(() => {
     getBuskerProfile();
   }, []);
