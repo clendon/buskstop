@@ -17,7 +17,7 @@ export default function Login() {
         password: signUpPassword,
       },
       withCredentials: true,
-      url: 'http://localhost:3000/signup',
+      url: '/signup',
     })
       .then((res) => console.log(res));
   };
@@ -29,7 +29,7 @@ export default function Login() {
         password: loginPassword,
       },
       withCredentials: true,
-      url: 'http://localhost:3000/login',
+      url: '/login',
     })
       .then((res) => console.log(res))
       .catch((err) => console.log('ERROR:', err));
@@ -39,7 +39,7 @@ export default function Login() {
     axios({
       method: 'GET',
       withCredentials: true,
-      url: 'http://localhost:3000/user',
+      url: '/user',
     })
       .then((res) => console.log(res));
   };
