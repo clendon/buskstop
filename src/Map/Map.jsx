@@ -36,7 +36,6 @@ function Map() {
   useEffect(() => {
     if (!data) {
       axios.get('/buskers').then((response) => setData(response.data));
-      // axios.get('/buskers/Shrek/events').then((response) => setEvents(response.data));
     }
     if (data) {
       for (var i = 0; i < data.length; i++) {
@@ -95,8 +94,8 @@ function Map() {
     }
   };
 
-  const eventClickHandler = (event, busker) => {
-    setSelectedEvent(busker);
+  const eventClickHandler = (event, busker, label) => {
+    setSelectedEvent([busker, label]);
     if (eventOpen) {
       setEventOpen(false);
     }
@@ -143,7 +142,15 @@ function Map() {
               key={event["_id"]}
               position={{ lat: Number(event["coordinates"].split(" ").join().split(",")[2]), lng: Number(event["coordinates"].split(" ").join().split(",")[5])}}
               onLoad={marker => eventLoadHandler(marker, event)}
-              onClick={e => eventClickHandler(e, event)}
+              onClick={e => eventClickHandler(e, event, label)}
+              icon={{
+                path:
+                "M12.75 0l-2.25 2.25 2.25 2.25-5.25 6h-5.25l4.125 4.125-6.375 8.452v0.923h0.923l8.452-6.375 4.125 4.125v-5.25l6-5.25 2.25 2.25 2.25-2.25-11.25-11.25zM10.5 12.75l-1.5-1.5 5.25-5.25 1.5 1.5-5.25 5.25z",
+                fillColor: "#9ca3af",
+                fillOpacity: 1.0,
+                strokeWeight: 0,
+                scale: 1.25
+              }}
             />
           ))))}
       <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
@@ -152,15 +159,19 @@ function Map() {
               anchor={markerMap[selectedBusker["ID"]]}
               onCloseClick={() => setInfoOpen(false)}
             >
-              <div className="">
-                <h3>{selectedBusker["Name"]}</h3>
+              <div className="text-center">
+              <div className="text-bg"><h3>{selectedBusker["Name"]}</h3></div>
                 <hr></hr>
+                <br></br>
+
                 <div className="h5">{selectedBusker["Category"]}</div>
                 <hr></hr>
-                <div>{selectedBusker["Description"]}</div>
                 <div>
-
+                <br></br>
                 <img className="mx-auto object-contain h-48 w-full ..." src={selectedBusker["image"]} alt="display image" />
+                <br></br>
+                <div>{selectedBusker["Description"]}</div>
+
             </div>
               </div>
             </InfoWindow>
@@ -168,11 +179,13 @@ function Map() {
       <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3">
           {eventOpen && selectedEvent && (
             <InfoWindow
-              anchor={eventMap[selectedEvent["_id"]]}
+              anchor={eventMap[selectedEvent[0]["_id"]]}
               onCloseClick={() => setEventOpen(false)}
             >
               <div className="">
-                <h3>{selectedEvent["location"]}</h3>
+                <h3>{selectedEvent[1]}</h3>
+                <h3>{selectedEvent[0]["location"]}</h3>
+                <h3>{Date(selectedEvent[0]["date"])}</h3>
               </div>
             </InfoWindow>
           )}</div>
