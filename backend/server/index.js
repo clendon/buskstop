@@ -10,18 +10,13 @@ const passportLocal = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../../env/config');
-// commented out for now
-// const bodyParser = require('body-parser')
-
-const User = require('../database/user');
 const passportSetup = require('./passportConfig');
-
 const database = require('../database/index');
 
 // create server
 const app = express();
 
-// middleware
+// --------------MIDDLEWARE------------------------------------------
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
@@ -29,8 +24,6 @@ app.use(cors({
   origin: 'https://localhost:3000',
   credentials: true,
 }));
-// app.use(cookieParser('secretCode'));
-// TODO: fix this, session is not defined and breaks the server trying to run the code
 app.use(session({
   secret: 'secretcode',
   resave: true,
@@ -43,35 +36,24 @@ app.use(passport.session());
 // passport.use(new GoogleStrategy());
 require('./passportConfig')(passport);
 
-// path to database
-// eslint-disable-next-line import/no-unresolved
-const db = require('../database/index.js');
-
-// connect to database
-const m = new mongoose.Mongoose();
-m.connect(keys.mongodb.dbURI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-// routes
-// Routes to handle interactions with the Front-end
 /**
- * Routes Needed:
+ * // --------------ROUTES------------------------------------------
  *   1) GET Buskers
  *   2) GET Buskers - delinineated by category
- *   3) GET Performers by followers <-- NEED TO ADD
+ * Audience View
+ *   3) GET Performers being followed by specfic user
+ *   4) POST new follow on a Performer
+ *   5) PATCH follower on a Performer
  * Performer View
- *   4) GET thier own performances
- *   5) POST new performance
- *   6) PUT - edit performance (params will include properties included within the events doc)
- *   7) DELETE a performance OR all performances
- *   8) GET number of followers
+ *   6) GET Followers by Busker
+ *   7) GET thier own performances
+ *   8) POST new performance
+ *   9) PATCH - edit performance (params will include properties included within the events doc)
+ *  10) DELETE a performance OR all performances
  * Mixed
- *   9) GET profile - Busker
- *  10) GET profile - audience member
- *  11) DELETE profile
+ *  11) GET profile - Busker
+ *  12) GET profile - audience member
+ *  13) DELETE profile
  */
 
 // 1)
@@ -97,12 +79,67 @@ app.get('/buskers/:category', async ({ params }, res) => {
     });
 });
 
-// 3) Need to ADD Below
-// --------------Audience View--------------------------------------
+app.get('/buskers/:cash', async ({ params }, res) => {
+  const { cash } = params;
+  await database.findBuskerByCash(cash)
+    .then((results) => {
+      res.status(201).send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
 
+// --------------Audience View--------------------------------------
+// 3)
+app.get('/users/:name/following', async ({ params }, res) => {
+  const { name } = params;
+  await database.findBuskerByName(name)
+    .then((results) => {
+      res.send(results[0].Following);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+// 4)
+app.post('/users/:name/follow', async ({ params, user }, res) => {
+  const { name } = params;
+  await database.followPerformer(user, name)
+    .then((results) => {
+      res.status(201).send(results);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// 5)
+app.patch('/users/:name/unfollow', async ({ params, user }, res) => {
+  const { name } = params;
+  await database.unFollowerPerformer(user, name)
+    .then((results) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
 // --------------Performer View--------------------------------------
 
-// 4)
+// 6)
+app.get('/buskers/:name/followers', async ({ params }, res) => {
+  const { name } = params;
+  await database.findBuskerByName(name)
+    .then((results) => {
+      res.send(results[0].Followers);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// 7)
 app.get('/buskers/:name/events', async ({ params }, res) => {
   const { name } = params;
   await database.findBuskerByName(name)
@@ -114,7 +151,7 @@ app.get('/buskers/:name/events', async ({ params }, res) => {
     });
 });
 
-// 5)
+// 8)
 app.post('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
   const newEvent = {
@@ -131,8 +168,8 @@ app.post('/buskers/:name/events', async ({ params, body }, res) => {
     });
 });
 
-// 6)
-app.put('/buskers/:name/events', async ({ params, body }, res) => {
+// 9)
+app.patch('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
   await database.updateEventFor(name, body)
     .then(() => {
@@ -143,7 +180,7 @@ app.put('/buskers/:name/events', async ({ params, body }, res) => {
     });
 });
 
-// 7)
+// 10)
 app.delete('/buskers/:name/events', async ({ params, body }, res) => {
   const { name } = params;
   await database.deleteEventFor(name, body)
@@ -155,21 +192,8 @@ app.delete('/buskers/:name/events', async ({ params, body }, res) => {
     });
 });
 
-// 8)
-app.get('/buskers/:name/followers', async ({ params }, res) => {
-  const { name } = params;
-  await database.findBuskerByName(name)
-    .then((results) => {
-      // NOTE: This result Object must be reconfigured to Handle followers properly.
-      res.send(results);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
-
 // --------------Mixed--------------------------------------
-// 9)
+// 11)
 app.get('/profile/:name/busker', async ({ params }, res) => {
   const { name } = params;
   await database.findBuskerByName(name)
@@ -180,10 +204,9 @@ app.get('/profile/:name/busker', async ({ params }, res) => {
     .catch((err) => {
       res.send(err);
     });
-  res.send('TEST');
 });
 
-// 10)
+// 12)
 app.get('profile/:name/audience', async ({ params }, res) => {
   const { name } = params;
   await database.findBuskerByName(name)
@@ -196,7 +219,7 @@ app.get('profile/:name/audience', async ({ params }, res) => {
     });
 });
 
-// 11)
+// 13)
 app.delete('/profile/:name', async ({ params }, res) => {
   const { name } = params;
   await database.deleteProfileFor(name)
@@ -208,51 +231,34 @@ app.delete('/profile/:name', async ({ params }, res) => {
     });
 });
 
-// --------------RANDOM TO BE DELETED--------------------------------------
-app.get('/people', (req, res) => {
-  database.models.people.find()
-    .exec()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log('you have an err', err);
-      res.end();
-    });
-});
-app.post('/people', (req, res) => {
-  res.sendStatus(201);
-});
-
-// Routes to handle logging in & logging out
-app.post('/login', (req, res) => {
+// --------------AUTHENTICATION ROUTES--------------------------------------
+app.post('/login', (req, res, next) => {
   // eslint-disable-next-line no-unused-vars
   passport.authenticate('local', (err, user, info) => {
     if (err) throw err;
     if (!user) res.send('No User Exists');
     else {
       // eslint-disable-next-line no-shadow
-      req.login(user, (err) => {
+      req.logIn(user, (err) => {
         if (err) throw err;
         res.send('Successfully Authenticated');
         // eslint-disable-next-line no-console
         console.log(req.user);
       });
     }
-  });
-  // eslint-disable-next-line no-unused-expressions
-  (req, res);
+  })(req, res, next);
 });
 
-app.post('/signup', (req, res) => {
-  database.models.NewUser.findOne({ username: req.body.username }, async (err, doc) => {
+app.post('/signup', ({ body }, res) => {
+  const { username, password } = body;
+  database.models.NewUser.findOne({ username }, async (err, doc) => {
     if (err) throw err;
     if (doc) res.send('User Already Exists');
     if (!doc) {
+      const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new database.models.NewUser({
-        username: req.body.username,
-        password: req.body.password,
+        username,
+        password: hashedPassword,
       });
       await newUser.save();
       res.send('User Created');
@@ -266,7 +272,9 @@ app.get('/user', (req, res) => {
 });
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  }));
 
 app.get('/auth/google/redirect',
   passport.authenticate('google', { failureRedirect: '/login' }),
@@ -274,6 +282,14 @@ app.get('/auth/google/redirect',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
+
+app.get('/logout', (req, res) => {
+  // console.log('req:::', req)
+  // database.deleteGoogleId(req.sessionID)
+  // console.log('lessgooooooo', req.sessionID)
+  req.logout();
+  res.redirect('/');
+});
 
 // app.get('/people', (req, res) => {
 //   database.models.people.find()

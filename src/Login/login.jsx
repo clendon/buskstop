@@ -25,14 +25,16 @@ export default function Login() {
     axios({
       method: 'POST',
       data: {
-        username: signUpUsername,
-        password: signUpPassword,
+        username: loginUsername,
+        password: loginPassword,
       },
       withCredentials: true,
       url: 'http://localhost:3000/login',
     })
-      .then((res) => console.log(res));
+      .then((res) => console.log(res))
+      .catch((err) => console.log('ERROR:', err));
   };
+
   const getUser = () => {
     axios({
       method: 'GET',
