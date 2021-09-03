@@ -36,13 +36,16 @@ const Audience = ( {name} ) => {
   } 
 
   //need this function to process messy response from db 
-  const followProcessor = () => {};
+  const followProcessor = (arr) => {
+    const followers = arr.map(item => Object.values(item).slice(0, -1).join(''));
+    return followers;
+  };
 
   useEffect(async () => {
     try {
-      const followingList = await fetch(`http://localhost:3000/users/${name}/following`)
+      const res = await fetch(`http://localhost:3000/users/${name}/following`)
       .then(res => res.json());
-      console.log(Object.values(followingList[0]));
+      console.log(followProcessor(res));
 
       // const post = await fetch(`http://localhost:3000/users/${name}/follow`, {
       //   method: 'POST',
