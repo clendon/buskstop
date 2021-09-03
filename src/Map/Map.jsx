@@ -57,10 +57,6 @@ function Map() {
 
   const fitBounds = map => {
     const bounds = new window.google.maps.LatLngBounds();
-    // data.map(busker => {
-    //   bounds.extend({ lat: Number(busker["Coordinates"].split(" ").join().split(",")[2]), lng: Number(busker["Coordinates"].split(" ").join().split(",")[5])});
-    //   return data.id;
-    // });
     map.fitBounds(bounds);
   };
 
@@ -176,7 +172,7 @@ function Map() {
               </div>
             </InfoWindow>
           )}</div>
-      <div className="h-3/4 justify-self-end absolute align-self-center row-start-1 row-end-3 bg-blue-600">
+      <div className="justify-self-end absolute align-self-center row-start-1 row-end-3 bg-blue-600">
           {eventOpen && selectedEvent && (
             <InfoWindow
               anchor={eventMap[selectedEvent[0]["_id"]]}
@@ -185,7 +181,7 @@ function Map() {
               <div className="">
                 <h3 div className="text-lg text-center">{selectedEvent[1]}</h3>
                 <h3>{selectedEvent[0]["location"]}</h3>
-                <h3>{Date(selectedEvent[0]["date"])}</h3>
+                <h3>Date: {Date(selectedEvent[0]["date"]).slice(0, 21)}</h3>
               </div>
             </InfoWindow>
           )}</div>
