@@ -30,23 +30,23 @@ const PerformerTile = ({event, getBuskerProfile, buskerName}) => {
   };
 
   return (
-    <div className="pt-3 bg-white mx-1">
-      <div className="flex flex-row bg-white border rounded mx-1 shadow-md my-1">
-        <div className="flex flex-col w-4/6 bg-yellow-600 rounded-l">
+    <div className="pt-3 mx-1">
+      <div className="flex flex-row bg-yellow-600 border rounded mx-1 shadow-md my-1">
+        <div className="flex flex-col w-4/6 rounded-l">
           <div className="flex flex-col bg-yellow-600 rounded p-1">
             <div><b>Location</b></div>
             <div>{location}</div>
           </div>
-          <div className="flex flex-col bg-yellow-600 rounded-b p-1">
+          <div className="flex flex-col rounded-b p-1">
             <div><b>Date</b></div>
             <div>{date}</div>
           </div>
         </div>
-        <div className="grid place-items-center w-2/6 bg-gray-200'">
-          <button 
-            type="submit" 
-            onClick={deleteEvent} 
-            className="rounded w-3/4 h-1/3 bg-yellow-600 text-white font-bold uppercase"
+        <div className="grid place-items-center w-2/6">
+          <button
+            type="submit"
+            onClick={deleteEvent}
+            className="rounded w-3/4 h-1/3 bg-gray-400 font-bold uppercase"
           >
             Delete
           </button>

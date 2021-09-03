@@ -69,7 +69,7 @@ const Performer = () => {
   }
 
   return (
-    <div className="">
+    <div className="bg-gray-700">
       <PerformerInfo profile={profile}/>
       {showAlert ? <Alert showAlert={showAlert} setShowAlert={setShowAlert} color="pink" text={alertText}/> : null}
       <NewPerformance createAlert={createAlert} getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} setShowAlert={setShowAlert} />
