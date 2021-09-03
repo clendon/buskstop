@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Datetime from "react-datetime";
 import MapModal from './MapModal.jsx';
 
-const Form = ({setNewCoord, latLng, setTime, time, location}) => {
+const Form = ({setNewCoord, latLng, setTime, time, location, createAlert}) => {
 
   const [mapOpen, setMapOpen] = useState(false);
 
@@ -21,6 +21,7 @@ const Form = ({setNewCoord, latLng, setTime, time, location}) => {
       </div>
       {mapOpen ? (
         <MapModal
+          createAlert={createAlert}
           setMapOpen={setMapOpen}
           setNewCoord={setNewCoord}
           latLngOG={latLng}
