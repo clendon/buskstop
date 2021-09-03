@@ -172,14 +172,14 @@ function Map() {
               </div>
             </InfoWindow>
           )}</div>
-      <div className="justify-self-end absolute align-self-center row-start-1 row-end-3 bg-gray-400 border-gray-400	">
+      <div className="justify-self-end absolute align-self-center row-start-1 row-end-3">
           {eventOpen && selectedEvent && (
-            <div className="bg-gray-400 border-gray-400	">
+            <div className="">
             <InfoWindow
               anchor={eventMap[selectedEvent[0]["_id"]]}
               onCloseClick={() => setEventOpen(false)}
             >
-              <div className="bg-gray-400 border-gray-400	">
+              <div className="">
                 <h3><div className="text-lg text-center">{selectedEvent[1]}</div></h3>
                 <h3>{selectedEvent[0]["location"]}</h3>
                 <h3>Date: {Date(selectedEvent[0]["date"]).slice(0, 21)}</h3>
