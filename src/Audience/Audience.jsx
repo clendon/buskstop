@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'; //eslint-disable-line
 import Feed from '../Shared/Feed.jsx'; //eslint-disable-line
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 const samplePerformances = [
   {
@@ -49,9 +50,16 @@ const Audience = ( {name} ) => {
       console.log(followedList);
       for (const busker of followedList) {
         const eventList = await fetch(`/buskers/${busker}/events`).then(res => res.json());
-        console.log(eventList);
+        for (const event of eventList) {
+          const performance = {
+            name: busker,
+            location: event.location,
+            date: moment(Number(event.date)).format('MMMM Do YYYY, h:mm:ss a'),
+          };
+          events.push(performance);
+        }
       }
-
+      setPerformances(events);
     } catch (err) {
       console.error(err);
     } 
@@ -59,7 +67,7 @@ const Audience = ( {name} ) => {
 
   return (
     <div>
-      audience here
+      {performances.length && <Feed performances={performances}/>}
     </div>
   );
 };

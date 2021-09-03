@@ -32,7 +32,6 @@ const Card = ({performance}) => {
     <div className=" border border-black rounded flex flex-col justify-evenly">
       <div>{performance.name}</div>
       <div>{performance.location}</div>
-      <div>{performance.category}</div>
       <div>{performance.date}</div>
       <div>{performance.time}</div>
       <button className="border-2 border-yellow-600 rounded" type="button">delete</button>
