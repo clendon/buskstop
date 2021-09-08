@@ -36,7 +36,7 @@ const Performer = () => {
   const getBuskerProfile = () => {
     const configProfile = {
       method: 'get',
-      url: `https://buskstop.herokuapp.com/${buskerName}/busker`,
+      url: `http://localhost:3000/profile/${buskerName}/busker`,
       headers: {},
     };
 

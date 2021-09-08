@@ -12,7 +12,7 @@ const PerformerTile = ({event, getBuskerProfile, buskerName}) => {
 
     const configDeleteEvent = {
       method: 'delete',
-      url: `https://buskstop.herokuapp.com/${buskerName}/events`,
+      url: `http://localhost:3000/buskers/${buskerName}/events`,
       headers: {
         'Content-Type': 'application/json',
       },

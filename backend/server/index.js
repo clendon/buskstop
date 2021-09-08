@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'https://buskstop.herokuapp.com/',
+  origin: 'https://localhost:3000',
   credentials: true,
 }));
 app.use(session({

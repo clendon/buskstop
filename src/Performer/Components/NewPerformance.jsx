@@ -57,7 +57,7 @@ const NewPerformance = ({latLng, profile, getBuskerProfile, createAlert, setShow
 
       let configPost = {
         method: 'post',
-        url: `https://buskstop.herokuapp.com/${profile.Name}/events`,
+        url: `http://localhost:3000/buskers/${profile.Name}/events`,
         headers: {
           'Content-Type': 'application/json',
         },

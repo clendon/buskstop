@@ -17,7 +17,7 @@ export default function Login() {
         password: signUpPassword,
       },
       withCredentials: true,
-      url: 'https://buskstop.herokuapp.com/signup',
+      url: 'http://localhost:3000/signup',
     })
       .then((res) => console.log(res));
   };
@@ -29,7 +29,7 @@ export default function Login() {
         password: loginPassword,
       },
       withCredentials: true,
-      url: 'https://buskstop.herokuapp.com/login',
+      url: 'http://localhost:3000/login',
     })
       .then((res) => console.log(res))
       .catch((err) => console.log('ERROR:', err));
@@ -39,7 +39,7 @@ export default function Login() {
     axios({
       method: 'GET',
       withCredentials: true,
-      url: 'https://buskstop.herokuapp.com/user',
+      url: 'http://localhost:3000/user',
     })
       .then((res) => console.log(res));
   };
