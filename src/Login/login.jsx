@@ -17,7 +17,7 @@ export default function Login() {
         password: signUpPassword,
       },
       withCredentials: true,
-      url: 'http://localhost:3000/signup',
+      url: 'https://buskstop.herokuapp.com/signup',
     })
       .then((res) => console.log(res));
   };
@@ -29,7 +29,7 @@ export default function Login() {
         password: loginPassword,
       },
       withCredentials: true,
-      url: 'http://localhost:3000/login',
+      url: 'https://buskstop.herokuapp.com/login',
     })
       .then((res) => console.log(res))
       .catch((err) => console.log('ERROR:', err));
@@ -39,16 +39,16 @@ export default function Login() {
     axios({
       method: 'GET',
       withCredentials: true,
-      url: 'http://localhost:3000/user',
+      url: 'https://buskstop.herokuapp.com/user',
     })
       .then((res) => console.log(res));
   };
 
   return (
     <div className={`flex flex-col h-full justify-evenly items-center ${showModal ? 'backdrop-filter backdrop-brightness-75' : ''}`}>
-      {showModal && 
+      {showModal &&
         (
-          <Modal onClick={(e) => {setShowModal(false)}}> 
+          <Modal onClick={(e) => {setShowModal(false)}}>
             <form className="flex flex-col justify-evenly w-3/4">
               <label for="username">Username:</label>
               <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setSignUpUsername(e.target.value)} name="username"/>

@@ -4,7 +4,7 @@ import SearchBar from '../Shared/SearchBar.jsx';
 import axios from 'axios';
 import { params } from '../Shared/variables.js';
 
-const buskerSearch = `http://localhost:3000/${params.people}`
+const buskerSearch = `https://buskstop.herokuapp.com/${params.people}`
 
 const Search = function() {
   const [buskers, setBuskers] = useState([]);
