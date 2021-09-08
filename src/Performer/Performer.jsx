@@ -36,7 +36,7 @@ const Performer = () => {
   const getBuskerProfile = () => {
     const configProfile = {
       method: 'get',
-      url: `http://18.222.29.59/profile/${buskerName}/busker`,
+      url: `http://18.191.245.221/profile/${buskerName}/busker`,
       headers: {},
     };
 
