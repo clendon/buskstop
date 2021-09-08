@@ -1,5 +1,7 @@
-import React, { useState } from 'react'; //eslint-disable-line
+import React, { useState, useEffect } from 'react'; //eslint-disable-line
 import Feed from '../Shared/Feed.jsx'; //eslint-disable-line
+import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 const samplePerformances = [
   {
@@ -25,8 +27,50 @@ const samplePerformances = [
   },
 ];
 
-const Audience = ({ profile }) => (
-  <Feed performances={samplePerformances} performer={profile.performer}/>
-);
+const Audience = ( {name} ) => {
+  {/* <Feed performances={samplePerformances} performer={profile.performer}/> */}
+  const [performances, setPerformances] = useState([]);
+
+  if (!name) {
+    return <Redirect to="/login"/>
+  }
+
+  //need this function to process messy response from db
+  const followProcessor = (arr) => {
+    const followers = arr.map(item => Object.values(item).slice(0, -1).join(''));
+    return followers;
+  };
+
+  useEffect(async () => {
+    try {
+      const followedList = await fetch(`/users/${name}/following`)
+        .then(res => res.json())
+        .then(data => followProcessor(data));
+      let events = [];
+      console.log(followedList);
+      for (const busker of followedList) {
+        const eventList = await fetch(`/buskers/${busker}/events`).then(res => res.json());
+        for (const event of eventList) {
+          const performance = {
+            name: busker,
+            location: event.location,
+            date: moment(Number(event.date)).format('MMMM Do YYYY, h:mm:ss a'),
+          };
+          events.push(performance);
+        }
+      }
+      setPerformances(events);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  return (
+    <div className="h-full bg-gray-700 mb-10">
+      <h3 className="text-xl text-center bg-yellow-600 h-10">Your Events</h3>
+      {performances.length && <Feed performances={performances}/>}
+    </div>
+  );
+};
 
 export default Audience;

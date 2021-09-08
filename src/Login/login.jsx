@@ -17,7 +17,7 @@ export default function Login() {
         password: signUpPassword,
       },
       withCredentials: true,
-      url: 'http://localhost:3000/signup',
+      url: '/signup',
     })
       .then((res) => console.log(res));
   };
@@ -29,7 +29,7 @@ export default function Login() {
         password: loginPassword,
       },
       withCredentials: true,
-      url: 'http://localhost:3000/login',
+      url: '/login',
     })
       .then((res) => console.log(res))
       .catch((err) => console.log('ERROR:', err));
@@ -39,7 +39,7 @@ export default function Login() {
     axios({
       method: 'GET',
       withCredentials: true,
-      url: 'http://localhost:3000/user',
+      url: '/user',
     })
       .then((res) => console.log(res));
   };
@@ -50,9 +50,9 @@ export default function Login() {
         (
           <Modal onClick={(e) => {setShowModal(false)}}>
             <form className="flex flex-col justify-evenly w-3/4">
-              <label for="username">Username:</label>
+              <label for="username" className="text-yellow-600">Username:</label>
               <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setSignUpUsername(e.target.value)} name="username"/>
-              <label>Password:</label>
+              <label className="text-yellow-600">Password:</label>
               <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setSignUpPassword(e.target.value)} />
             </form>
             <button type="submit" className=" h-10 bg-yellow-600 rounded w-3/4" onClick={signUp}>Register</button>
@@ -60,10 +60,10 @@ export default function Login() {
         )
       }
       <form className="flex flex-col w-3/4 h-1/4 justify-evenly">
-        <label>Username:</label>
-        <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setLoginUsername(e.target.value)} />
-        <label>Password:</label>
-        <input className="border-2 border-yellow-600 rounded" type="text" onChange={(e) => setLoginPassword(e.target.value)} />
+        <label className="text-yellow-600">Username:</label>
+        <input className="border-2 border-yellow-600 rounded bg-gray-50" type="text" onChange={(e) => setLoginUsername(e.target.value)} />
+        <label className="text-yellow-600">Password:</label>
+        <input className="border-2 border-yellow-600 rounded bg-gray-50" type="text" onChange={(e) => setLoginPassword(e.target.value)} />
       </form>
       <div className="flex flex-col items-center justify-around h-1/6">
         <button type="submit" className=" h-10 bg-yellow-600 rounded w-3/4" onClick={getUser}>Submit</button>

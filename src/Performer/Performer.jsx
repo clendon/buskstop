@@ -36,7 +36,7 @@ const Performer = () => {
   const getBuskerProfile = () => {
     const configProfile = {
       method: 'get',
-      url: `http://localhost:3000/profile/${buskerName}/busker`,
+      url: `http://18.222.29.59/profile/${buskerName}/busker`,
       headers: {},
     };
 
@@ -60,10 +60,6 @@ const Performer = () => {
 
   };
 
-  console.log(alertText, showAlert)
-
-
-
   useEffect(() => {
     getBuskerProfile();
   }, []);
@@ -73,7 +69,7 @@ const Performer = () => {
   }
 
   return (
-    <div>
+    <div className="bg-gray-700">
       <PerformerInfo profile={profile}/>
       {showAlert ? <Alert showAlert={showAlert} setShowAlert={setShowAlert} color="pink" text={alertText}/> : null}
       <NewPerformance createAlert={createAlert} getBuskerProfile={getBuskerProfile} profile={profile} latLng={latLng} setShowAlert={setShowAlert} />

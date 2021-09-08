@@ -20,9 +20,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  origin: 'https://localhost:3000',
-  credentials: true,
+app.use(cors({origin: true, credentials: true,
 }));
 app.use(session({
   secret: 'secretcode',
@@ -35,7 +33,7 @@ app.use(passport.session());
 // TODO: this passport file is broken, prevents server from running
 // passport.use(new GoogleStrategy());
 require('./passportConfig')(passport);
-
+app.options('*', cors());
 /**
  * // --------------ROUTES------------------------------------------
  *   1) GET Buskers
