@@ -25,26 +25,13 @@ Buskstop is a social media platform for street performers, also known as buskers
 
 ## Authors
 
-Sean McGovern
-  * [smcgovern-proj](https://github.com/smcgovern-proj)
-
-Sumit Patel
-  * [sumitz1207](https://github.com/sumitz1207)
-
-Hayden Bonnen
-  * [haydenbp](https://github.com/haydenbp)
-
-Clendon DuRapau
-  * [clendon](https://github.com/clendon)
-
-Nicholas Ledan
-  * [Ledan-bot](https://github.com/Ledan-bot)
-
-Melika Campbell
-  * [melikaxo](https://github.com/melikaxo)
-
-Joshua Barnes
-  * [Joshua-Barnes03](https://github.com/Joshua-Barnes03)
+[Sean McGovern](https://github.com/smcgovern-proj)<br>
+[Sumit Patel](https://github.com/sumitz1207)<br>
+[Hayden Bonnen](https://github.com/haydenbp)<br>
+[Clendon DuRapau](https://github.com/clendon)<br>
+[Nicholas Ledan](https://github.com/Ledan-bot)<br>
+[Melika Campbell](https://github.com/melikaxo)<br>
+[Joshua Barnes](https://github.com/Joshua-Barnes03)
 
 ## Version History
 
